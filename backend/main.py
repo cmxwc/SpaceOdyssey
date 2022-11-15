@@ -29,6 +29,7 @@ def register_student(data: User):
         "password": password,
     }
     db.save_json(authpath, data_to_add)
+    db.save_json("student_info", {"username": username})
 
     return "Successfully registered!", data_to_add
 
@@ -46,8 +47,8 @@ def login_student(data: User):
                 return "Successfully logged in!"
             else:
                 return "Wrong password, try again!"
-        else:
-            return "Username does not exist!"
+
+    return "Username does not exist!"
 
 
 @app.post("/register_teacher", tags=['authentication'])
@@ -83,18 +84,54 @@ def login_teacher(data: User):
                 return "Successfully logged in!"
             else:
                 return "Wrong password, try again!"
-        else:
-            return "Username does not exist!"
+
+    return "Username does not exist!"
+
 
 # USER REQUESTS
-
-
 @app.get("/users", tags=['user'])
-async def get_all_users():
+def get_all_users():
     authpath = "auth_student"
     data = db.load_json(authpath)
     authpath = "auth_teacher"
-    data += db.load_json(authpath)
+    data.extend(db.load_json(authpath))
+    return data
+
+
+@app.get("/get_teachers", tags=['user'])
+def get_all_teachers():
+    authpath = "auth_teacher"
+    data = db.load_json(authpath)
+    return data
+
+
+@app.get("/get_students", tags=['user'])
+def get_all_students():
+    authpath = "auth_student"
+    data = db.load_json(authpath)
+    return data
+
+
+@app.post("/add_student_info", tags=['user'])
+def add_student_info(data: UserInfo):
+    authpath = "student_info"
+    data_to_add = data.dict()
+
+    data = db.load_json(authpath)
+    # return data[0]['username']
+    for index, i in enumerate(data):
+        if data_to_add['username'] == i['username']:
+            data[index] = data_to_add
+            db.update_json(authpath, data)
+            return "Successfully updated", data
+
+    return "Failed to update, username not found!"
+
+
+@app.get("/get_student_info", tags=['user'])
+def get_student_info():
+    authpath = "student_info"
+    data = db.load_json(authpath)
     return data
 
 

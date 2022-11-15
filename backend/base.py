@@ -25,8 +25,12 @@ class database():
                 json.dump(og, f)
 
     def update_json(self, name, data):
-        users = self.deta.Base(name)
-        users.put(data)
+        if self.deta:
+            users = self.deta.Base(name)
+            users.put(data)
+        else:
+            with open(f"{self.folder}{name}.json", "w") as f:
+                json.dump(data, f)
 
     def load_json(self, name, limit=0):
         if self.deta:
