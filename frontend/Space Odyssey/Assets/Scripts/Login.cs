@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class Login : MonoBehaviour
 {
-    public void ClickLogin()
+    public void GoBack()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
 
