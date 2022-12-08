@@ -17,7 +17,7 @@ class UserInfo(BaseModel):
 class Question(BaseModel):
     questionId: int
     questionSubject: str
-    questionTopic: str
+    questionTopic: int
     questionText: str
     questionAnsIndex: int
     questionAnsText: List[str]
