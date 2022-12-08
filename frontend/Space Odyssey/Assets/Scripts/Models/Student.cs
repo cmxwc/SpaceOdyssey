@@ -19,9 +19,6 @@ public class Student : User
         this.lastLoginDay = lastLoginDay;
     }
     public int highestScore { get; set; } // for leaderboard
-    public List<Pet> petsUnlocked { get; set; }
-    public int currentFood { get; set; }
-    public int currentWater { get; set; }
     public int numOfGamesCompleted { get; set; }
     public List<int> levelsUnlocked { get; set; }
     public string lastLoginDay;
