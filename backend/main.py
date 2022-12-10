@@ -31,10 +31,10 @@ def register_student(data: User):
     db.save_json(authpath, data_to_add)
     db.save_json("student_info", {"username": username})
 
-    return "Successfully registered!", data_to_add
+    return "User successfully registered"
 
 
-@app.get("/login_student", tags=['authentication'])
+@app.post("/login_student", tags=['authentication'])
 def login_student(data: User):
     authpath = "auth_student"
     username = data.username
@@ -44,7 +44,7 @@ def login_student(data: User):
     for i in data:
         if username in i['username']:
             if password == i['password']:
-                return "Successfully logged in!"
+                return "Successfully authenticated"
             else:
                 return "Wrong password, try again!"
 
@@ -112,25 +112,63 @@ def get_all_students():
     return data
 
 
-@app.post("/add_student_info", tags=['user'])
-def add_student_info(data: UserInfo):
-    authpath = "student_info"
+# @app.post("/add_student_info", tags=['user'])
+# def add_student_info(data: UserInfo):
+#     authpath = "student_info"
+#     data_to_add = data.dict()
+
+#     data = db.load_json(authpath)
+#     # return data[0]['username']
+#     for index, i in enumerate(data):
+#         if data_to_add['username'] == i['username']:
+#             data[index] = data_to_add
+#             db.update_json(authpath, data)
+#             return "Successfully updated", data
+
+#     return "Failed to update, username not found!"
+
+@app.post("/add_userData", tags=['userData'])
+async def add_userData(data: UserData):
+    authpath = "userData"
+    olddata = db.load_json(authpath)
+    for i in olddata:
+        if i['username'] == data.username:
+            return "Failed: Username already registered previously"
+
     data_to_add = data.dict()
+    db.save_json(authpath, data_to_add)
+    return "UserData successfully registered"
 
+
+@app.post("/update_userData", tags=['userData'])
+async def update_userData(data: UserData):
+    authpath = "userData"
+    data_to_add = data.dict()
+    olddata = db.load_json(authpath)
+    for idx, i in enumerate(olddata):
+        if i['username'] == data.username:
+            olddata[idx] = data_to_add
+
+            db.update_json(authpath, olddata)
+            return "UserData successfully updated"
+    return "UserData Failed to Update - Username Not Found"
+
+
+@app.get("/get_userData", tags=['userData'])
+@app.post("/get_userData", tags=['userData'])
+async def get_userData(username: str):
+    authpath = "userData"
     data = db.load_json(authpath)
-    # return data[0]['username']
-    for index, i in enumerate(data):
-        if data_to_add['username'] == i['username']:
-            data[index] = data_to_add
-            db.update_json(authpath, data)
-            return "Successfully updated", data
-
-    return "Failed to update, username not found!"
+    for i in data:
+        if i['username'] == username:
+            return i
+    return "No User Found"
 
 
-@app.get("/get_student_info", tags=['user'])
-def get_student_info():
-    authpath = "student_info"
+@app.get("/get_userData_all", tags=['userData'])
+# @app.post("/get_userData_all", tags=['userData'])
+async def get_userData_all():
+    authpath = "userData"
     data = db.load_json(authpath)
     return data
 

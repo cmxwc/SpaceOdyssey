@@ -7,11 +7,14 @@ class User(BaseModel):
     password: str
 
 
-class UserInfo(BaseModel):
+class UserData(BaseModel):
     username: str
-    name: str
-    userCharacter: int
+    classNumber: int
     highestScore: int
+    numOfGamesCompleted: int
+    levelsUnlocked: List[int]
+    subjectsTaken: List[str]
+    lastLoginDay: str
 
 
 class Question(BaseModel):

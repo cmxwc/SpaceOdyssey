@@ -5,8 +5,8 @@ using System.Security.Cryptography;
 
 public class PasswordManager
 {
-    // string key = "A60A5770FE5E7AB200BA9CFC94E4E8B0";
-    // string iv = "1234567887654321";
+    string key = "A60A5770FE5E7AB200BA9CFC94E4E8B0";
+    string iv = "1234567887654321";
 
     // // Encryption of password
     // public string ConvertToEncrypt(string password)
@@ -48,8 +48,8 @@ public class PasswordManager
     {
         using (Aes aes = Aes.Create())
         {
-            aes.GenerateKey();
-            aes.GenerateIV();
+            aes.Key = Encoding.ASCII.GetBytes(key);
+            aes.IV = Encoding.ASCII.GetBytes(iv);
 
             // Create a encryptor to perform the stream transform
             ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
@@ -80,8 +80,8 @@ public class PasswordManager
         // and generate a random key and IV
         using (Aes aes = Aes.Create())
         {
-            aes.GenerateKey();
-            aes.GenerateIV();
+            aes.Key = Encoding.ASCII.GetBytes(key);
+            aes.IV = Encoding.ASCII.GetBytes(iv);
 
             // Create a decryptor to perform the stream transform
             ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);

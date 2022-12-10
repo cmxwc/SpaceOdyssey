@@ -141,6 +141,7 @@ public class LoginAndRegister : MonoBehaviour
             if ((usernameInput == "admin") & (passwordEncrypted == temp))
             {
                 CreateNewStudentData();
+                // TODO figure out data controller
                 SaveUsername();
                 // TODO create scene manager
                 // scene.LoadStudentWelcomeUI();
@@ -152,14 +153,15 @@ public class LoginAndRegister : MonoBehaviour
                 var url = http_url + "login_student";
                 var response = http.Post(url, studentLogin);
                 Debug.Log(response);
-                // response = response.Substring(1, response.Length - 2);
-                // MessageLabel.text = response;
+                response = response.Substring(1, response.Length - 2);
+                MessageLabel.text = response;
 
-                // if (response == "Successfully authenticated")
-                // {
-                //     SaveUsername();
-                //     scene.LoadStudentWelcomeUI();
-                // }
+                if (response == "Successfully authenticated")
+                {
+                    SaveUsername();
+                    // TODO Scene manager
+                    // scene.LoadStudentWelcomeUI();
+                }
 
             }
         }
@@ -219,7 +221,9 @@ public class LoginAndRegister : MonoBehaviour
 
     public void SaveUsername()
     {
-        dataController = FindObjectOfType<DataManager>();
+        // TODO figure out data controller
+        // dataController = FindObjectOfType<DataManager>();
+        dataController = new DataManager();
         dataController.username = usernameInput;
     }
 
