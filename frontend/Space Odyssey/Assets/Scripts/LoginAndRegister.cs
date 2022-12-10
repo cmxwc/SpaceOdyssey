@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using TMPro;
 
 public class LoginAndRegister : MonoBehaviour
 {
@@ -10,6 +14,7 @@ public class LoginAndRegister : MonoBehaviour
     private bool usernameValid;
     private bool passwordValid;
     private string passwordEncrypted;
+    public TextMeshProUGUI MessageLabel;
     public PasswordManager pwd;
     private HttpManager http;
     // private SceneLoadermanager scene;
@@ -41,6 +46,7 @@ public class LoginAndRegister : MonoBehaviour
         if ((usernameInput.Length >= 6) & (Regex.IsMatch(usernameInput, @"^[a-zA-Z]+$")))
         {
             usernameValid = true;
+            MessageLabel.text = "";
         }
         else if (usernameInput == "admin")
         {
@@ -74,8 +80,9 @@ public class LoginAndRegister : MonoBehaviour
 
     public void ReadUsernameInput(string s)
     {
-        Debug.log(s);
+        Debug.Log(s);
         usernameInput = s;
+        IsUsernameValid();
         if (usernameValid)
         {
             usernameInput = s;
@@ -102,7 +109,7 @@ public class LoginAndRegister : MonoBehaviour
         else
         {
             passwordEncrypted = "";
-            MessageLabel.text = "Enter password of at least 8 chars";
+            MessageLabel.text = "Enter password of at least 8 characters";
         }
     }
 
@@ -110,6 +117,7 @@ public class LoginAndRegister : MonoBehaviour
     private StudentLoginDetails studentLogin;
     public void Login()
     {
+        Debug.Log("hello");
         // scene = new SceneLoaderManager();
         pwd = new PasswordManager();
         var temp = pwd.ConvertToEncrypt("admin");
@@ -133,7 +141,8 @@ public class LoginAndRegister : MonoBehaviour
             {
                 CreateNewStudentData();
                 SaveUsername();
-                scene.LoadStudentWelcomeUI();
+                // TODO create scene manager
+                // scene.LoadStudentWelcomeUI();
             }
             else
             {
