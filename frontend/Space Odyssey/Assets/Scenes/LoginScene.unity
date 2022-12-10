@@ -229,7 +229,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1557199010}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1010,7 +1010,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1672186304}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1804,6 +1804,7 @@ GameObject:
   - component: {fileID: 850934523}
   - component: {fileID: 850934522}
   - component: {fileID: 850934521}
+  - component: {fileID: 850934524}
   m_Layer: 5
   m_Name: Back Button
   m_TagString: Untagged
@@ -1824,8 +1825,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 640068833}
-  m_Father: {fileID: 1672186304}
-  m_RootOrder: 6
+  m_Father: {fileID: 1557199010}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1876,9 +1877,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Login, Assembly-CSharp
-        m_MethodName: GoBack
+      - m_Target: {fileID: 850934524}
+        m_TargetAssemblyTypeName: SceneLoaderManager, Assembly-CSharp
+        m_MethodName: LoadPrevScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1926,6 +1927,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 850934519}
   m_CullTransparentMesh: 1
+--- !u!114 &850934524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850934519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8d677c5a636a64898a7f27967cbda0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1114873024
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,6 +2377,7 @@ RectTransform:
   m_Children:
   - {fileID: 97098135}
   - {fileID: 446108113}
+  - {fileID: 850934520}
   - {fileID: 1672186304}
   - {fileID: 97637516}
   m_Father: {fileID: 0}
@@ -2408,10 +2422,9 @@ RectTransform:
   - {fileID: 2109861387}
   - {fileID: 1968065092}
   - {fileID: 538159112}
-  - {fileID: 850934520}
   - {fileID: 473367386}
   m_Father: {fileID: 1557199010}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

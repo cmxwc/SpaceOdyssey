@@ -9,16 +9,16 @@ using UnityEngine.SceneManagement; // can load scene
 public class DataManager : MonoBehaviour
 {
     //public Student student;
-    public string username { get; set; }
+    public static string username;
 
 
     // Start is called before the first frame update
-    // void Start()
-    // {
-    //     SceneManager.LoadScene("MainPageUI");
-    // }
-    // void Awake()
-    // {
-    //     DontDestroyOnLoad(gameObject);
-    // }
+    void Start()
+    {
+        SceneManager.LoadScene("MainPageUI");
+    }
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 }
