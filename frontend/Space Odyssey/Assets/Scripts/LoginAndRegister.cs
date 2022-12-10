@@ -10,6 +10,7 @@ using TMPro;
 
 public class LoginAndRegister : MonoBehaviour
 {
+    private string http_url = "http://localhost:8000/";
     private string usernameInput;
     private bool usernameValid;
     private bool passwordValid;
@@ -117,7 +118,6 @@ public class LoginAndRegister : MonoBehaviour
     private StudentLoginDetails studentLogin;
     public void Login()
     {
-        Debug.Log("hello");
         // scene = new SceneLoaderManager();
         pwd = new PasswordManager();
         var temp = pwd.ConvertToEncrypt("admin");
@@ -137,6 +137,7 @@ public class LoginAndRegister : MonoBehaviour
 
         if (usernameValid & passwordValid)
         {
+
             if ((usernameInput == "admin") & (passwordEncrypted == temp))
             {
                 CreateNewStudentData();
@@ -148,10 +149,9 @@ public class LoginAndRegister : MonoBehaviour
             {
                 studentLogin = new StudentLoginDetails(usernameInput, passwordEncrypted);
                 http = new HttpManager();
-                // TODO Change url
-                // var url = "http://172.21.148.165/login_student";
-                // var response = http.Post(url, studentLogin);
-                // Debug.Log(response);
+                var url = http_url + "login_student";
+                var response = http.Post(url, studentLogin);
+                Debug.Log(response);
                 // response = response.Substring(1, response.Length - 2);
                 // MessageLabel.text = response;
 
@@ -165,6 +165,44 @@ public class LoginAndRegister : MonoBehaviour
         }
     }
 
+    public void RegisterAndLogin()
+    {
+        if (usernameInput == null & passwordEncrypted == null)
+        {
+            MessageLabel.text = "Enter registration details";
+        }
+        else if (usernameInput == null)
+        {
+            MessageLabel.text = "Enter username";
+        }
+        else if (passwordEncrypted == null)
+        {
+            MessageLabel.text = "Enter password";
+        }
+
+        if (usernameValid & passwordValid)
+        {
+            studentLogin = new StudentLoginDetails(usernameInput, passwordEncrypted);
+            http = new HttpManager();
+            // scene = new SceneLoaderManager();
+            var url = http_url + "register_student";
+            var response = http.Post(url, studentLogin);
+            Debug.Log(response);
+            response = response.Substring(1, response.Length - 2);
+            MessageLabel.text = response;
+
+            if (response == "User successfully registered")
+            {
+                SaveUsername();
+                CreateNewStudentData();
+                var jsonString = JsonConvert.SerializeObject(student);
+                Debug.Log(jsonString);
+                // scene.LoadStudentWelcomeUI();
+            }
+
+        }
+    }
+
 
 
     public void CreateNewStudentData()
@@ -172,11 +210,10 @@ public class LoginAndRegister : MonoBehaviour
         var levelsUnlockedList = new List<int> { 0, 1 };
         var subjectsTakenList = new List<string> { "Maths", "English" };
         http = new HttpManager();
-        // TODO change url
-        // var url = "http://172.21.148.165/add_userData";
-        // student = new Student(usernameInput, 0, 0, 0, levelsUnlockedList, subjectsTakenList, DateTime.Now.ToString());
-        // var response = http.Post(url, student); // post to backend studentdata
-        // Debug.Log("post " + response);
+        var url = http_url + "add_userData";
+        student = new Student(usernameInput, 0, 0, 0, levelsUnlockedList, subjectsTakenList, DateTime.Now.ToString());
+        var response = http.Post(url, student); // post to backend studentdata
+        Debug.Log("post " + response);
 
     }
 
