@@ -9,7 +9,7 @@ public class PasswordManager
     string iv = "127djjdh28938";
 
     // Encryption of password
-    public static string ConvertToEncrypt(string password)
+    public string ConvertToEncrypt(string password)
     {
         AesCryptoServiceProvider acsp = new AesCryptoServiceProvider();
         acsp.Key = Encoding.ASCII.GetBytes(key);
@@ -27,7 +27,7 @@ public class PasswordManager
     }
 
     // Decryption of password
-    public static string ConvertToDecrypt(string inputData)
+    public string ConvertToDecrypt(string inputData)
     {
         AesCryptoServiceProvider acsp = new AesCryptoServiceProvider();
         acsp.Key = Encoding.ASCII.GetBytes(key);
