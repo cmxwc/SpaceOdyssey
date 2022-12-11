@@ -44,7 +44,6 @@ public class StudentProfileManager : MonoBehaviour
     {
         var url = http_url + "get_userData?username=" + username;
         Student profileDetails = HttpManager.Get<Student>(url);  // Must specify the <TResultType> when calling the method
-        Debug.Log(profileDetails.classNumber);
         usernameLabel.text = username;
         classLabel.text = profileDetails.classNumber.ToString();
         highestScoreLabel.text = profileDetails.highestScore.ToString();

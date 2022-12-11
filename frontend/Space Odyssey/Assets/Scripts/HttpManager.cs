@@ -10,6 +10,7 @@ using System.Net.Http;
 
 public class HttpManager
 {
+    public static string http_url = "http://localhost:8000/";
 
     public static TResultType Get<TResultType>(string url)
     {
@@ -21,7 +22,7 @@ public class HttpManager
         return result;
     }
 
-    public string Post<TPostType>(string url, TPostType obj)
+    public static string Post<TPostType>(string url, TPostType obj)
     {
         HttpClient client = new HttpClient();
         var jsonString = JsonConvert.SerializeObject(obj);
@@ -32,7 +33,7 @@ public class HttpManager
         return responseStr;
     }
 
-    public string Put<TPutType>(string url, TPutType obj)
+    public static string Put<TPutType>(string url, TPutType obj)
     {
         HttpClient client = new HttpClient();
         var formContent = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
@@ -41,7 +42,7 @@ public class HttpManager
         return responseStr;
     }
 
-    public string Delete(string url)
+    public static string Delete(string url)
     {
         HttpClient client = new HttpClient();
         HttpResponseMessage response = client.DeleteAsync(url).GetAwaiter().GetResult();

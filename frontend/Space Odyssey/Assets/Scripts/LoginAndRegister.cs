@@ -10,7 +10,6 @@ using TMPro;
 
 public class LoginAndRegister : MonoBehaviour
 {
-    private string http_url = "http://localhost:8000/";
     private string usernameInput;
     private bool usernameValid;
     private bool passwordValid;
@@ -145,9 +144,8 @@ public class LoginAndRegister : MonoBehaviour
             else
             {
                 studentLogin = new StudentLoginDetails(usernameInput, passwordEncrypted);
-                http = new HttpManager();
-                var url = http_url + "login_student";
-                var response = http.Post(url, studentLogin);
+                var url = HttpManager.http_url + "login_student";
+                var response = HttpManager.Post(url, studentLogin);
                 Debug.Log(response);
                 response = response.Substring(1, response.Length - 2);
                 MessageLabel.text = response;
@@ -180,9 +178,8 @@ public class LoginAndRegister : MonoBehaviour
         if (usernameValid & passwordValid)
         {
             studentLogin = new StudentLoginDetails(usernameInput, passwordEncrypted);
-            http = new HttpManager();
-            var url = http_url + "register_student";
-            var response = http.Post(url, studentLogin);
+            var url = HttpManager.http_url + "register_student";
+            var response = HttpManager.Post(url, studentLogin);
             Debug.Log(response);
             response = response.Substring(1, response.Length - 2);
             MessageLabel.text = response;
@@ -205,10 +202,9 @@ public class LoginAndRegister : MonoBehaviour
     {
         var levelsUnlockedList = new List<int> { 0, 1 };
         var subjectsTakenList = new List<string> { "Maths", "English" };
-        http = new HttpManager();
-        var url = http_url + "add_userData";
+        var url = HttpManager.http_url + "add_userData";
         student = new Student(usernameInput, 0, 0, 0, levelsUnlockedList, subjectsTakenList, DateTime.Now.ToString());
-        var response = http.Post(url, student); // post to backend studentdata
+        var response = HttpManager.Post(url, student); // post to backend studentdata
         Debug.Log("post " + response);
 
     }
