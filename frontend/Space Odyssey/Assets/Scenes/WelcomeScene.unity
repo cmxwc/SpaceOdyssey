@@ -392,7 +392,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Welcome back,
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c55f757a213e31649ab7131750c905ed, type: 2}
   m_sharedMaterial: {fileID: 1393249764811659517, guid: c55f757a213e31649ab7131750c905ed, type: 2}
@@ -1080,6 +1080,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   username: 
   usernameLabel: {fileID: 446108114}
+  classLabel: {fileID: 0}
+  highestScoreLabel: {fileID: 0}
+  numOfGamesCompletedLabel: {fileID: 0}
+  subjectsTakenLabel: {fileID: 0}
+  lastLoginLabel: {fileID: 0}
 --- !u!4 &1702312109
 Transform:
   m_ObjectHideFlags: 0

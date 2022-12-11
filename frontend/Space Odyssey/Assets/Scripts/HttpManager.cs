@@ -10,10 +10,10 @@ using System.Net.Http;
 
 public class HttpManager
 {
-    HttpClient client = new HttpClient();
 
-    public TResultType Get<TResultType>(string url)
+    public static TResultType Get<TResultType>(string url)
     {
+        HttpClient client = new HttpClient();
         HttpResponseMessage response = client.GetAsync(url).GetAwaiter().GetResult();
         string responseStr = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
         Debug.Log(responseStr);
@@ -23,6 +23,7 @@ public class HttpManager
 
     public string Post<TPostType>(string url, TPostType obj)
     {
+        HttpClient client = new HttpClient();
         var jsonString = JsonConvert.SerializeObject(obj);
         Debug.Log(jsonString);
         var formContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
@@ -33,6 +34,7 @@ public class HttpManager
 
     public string Put<TPutType>(string url, TPutType obj)
     {
+        HttpClient client = new HttpClient();
         var formContent = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
         HttpResponseMessage response = client.PutAsync(url, formContent).GetAwaiter().GetResult();
         string responseStr = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -41,6 +43,7 @@ public class HttpManager
 
     public string Delete(string url)
     {
+        HttpClient client = new HttpClient();
         HttpResponseMessage response = client.DeleteAsync(url).GetAwaiter().GetResult();
         string responseStr = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
         return responseStr;

@@ -18,7 +18,6 @@ public class LoginAndRegister : MonoBehaviour
     public TextMeshProUGUI MessageLabel;
     public PasswordManager pwd;
     private HttpManager http;
-    private SceneLoaderManager scene;
     public Student student;
     // private DataManager dataController;
 
@@ -118,7 +117,6 @@ public class LoginAndRegister : MonoBehaviour
     private StudentLoginDetails studentLogin;
     public void Login()
     {
-        scene = new SceneLoaderManager();
         pwd = new PasswordManager();
         var temp = pwd.ConvertToEncrypt("admin");
 
@@ -141,9 +139,8 @@ public class LoginAndRegister : MonoBehaviour
             if ((usernameInput == "admin") & (passwordEncrypted == temp))
             {
                 CreateNewStudentData();
-                // TODO figure out data controller
                 SaveUsername();
-                scene.LoadWelcomeScene();
+                SceneLoaderManager.LoadWelcomeScene();
             }
             else
             {
@@ -158,7 +155,7 @@ public class LoginAndRegister : MonoBehaviour
                 if (response == "Successfully authenticated")
                 {
                     SaveUsername();
-                    scene.LoadWelcomeScene();
+                    SceneLoaderManager.LoadWelcomeScene();
                 }
 
             }
@@ -184,7 +181,6 @@ public class LoginAndRegister : MonoBehaviour
         {
             studentLogin = new StudentLoginDetails(usernameInput, passwordEncrypted);
             http = new HttpManager();
-            scene = new SceneLoaderManager();
             var url = http_url + "register_student";
             var response = http.Post(url, studentLogin);
             Debug.Log(response);
@@ -197,7 +193,7 @@ public class LoginAndRegister : MonoBehaviour
                 CreateNewStudentData();
                 var jsonString = JsonConvert.SerializeObject(student);
                 Debug.Log(jsonString);
-                scene.LoadWelcomeScene();
+                SceneLoaderManager.LoadWelcomeScene();
             }
 
         }
@@ -219,9 +215,6 @@ public class LoginAndRegister : MonoBehaviour
 
     public void SaveUsername()
     {
-        // // TODO figure out data controller
-        // dataController = FindObjectOfType<DataManager>();
-        // // dataController = new DataManager();
         DataManager.username = usernameInput;
     }
 

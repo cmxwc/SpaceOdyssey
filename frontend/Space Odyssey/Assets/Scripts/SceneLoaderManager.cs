@@ -6,35 +6,39 @@ using System;
 
 public class SceneLoaderManager : MonoBehaviour
 {
-    public void LoadPrevScene()
+    public static void LoadPrevScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
-    public void LoadNextScene()
+    public static void LoadNextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-    public void Load(string sceneName)
+    public static void Load(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
-    public void LoadPersistent()
+    public static string CurrentScene()
+    {
+        return SceneManager.GetActiveScene().name;
+    }
+    public static void LoadPersistent()
     {
         SceneManager.LoadScene("Persistent");
     }
-    public void LoadMainPageScene()
+    public static void LoadMainPageScene()
     {
         SceneManager.LoadScene("MainMenuScene");
     }
-    public void LoadLoginScene()
+    public static void LoadLoginScene()
     {
         SceneManager.LoadScene("LoginScene");
     }
-    public void LoadWelcomeScene()
+    public static void LoadWelcomeScene()
     {
         SceneManager.LoadScene("WelcomeScene");
     }
-    public void LoadProfileScene()
+    public static void LoadProfileScene()
     {
         SceneManager.LoadScene("ProfileScene");
     }
