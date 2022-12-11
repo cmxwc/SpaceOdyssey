@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/WelcomeScene.unity
     guid: 07126c078e604b64bb04ef9ebc5594d0
   - enabled: 1
+    path: Assets/Scenes/SelectPlanetScene.unity
+    guid: 3a597be0ef03fc541961b0a938d61034
+  - enabled: 1
     path: Assets/Scenes/ProfileScene.unity
     guid: e378bf9215812684d89c6323d5fa55cb
   m_configObjects: {}

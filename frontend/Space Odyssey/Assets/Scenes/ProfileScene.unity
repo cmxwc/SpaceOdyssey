@@ -1712,7 +1712,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 909732327}
         m_TargetAssemblyTypeName: SceneLoaderManager, Assembly-CSharp
-        m_MethodName: LoadPrevScene
+        m_MethodName: LoadWelcomeScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -42,6 +42,10 @@ public class SceneLoaderManager : MonoBehaviour
     {
         SceneManager.LoadScene("ProfileScene");
     }
+    public static void LoadSelectPlanetScene()
+    {
+        SceneManager.LoadScene("SelectPlanetScene");
+    }
 
 
 }
