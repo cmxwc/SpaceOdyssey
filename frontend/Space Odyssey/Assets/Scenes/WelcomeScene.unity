@@ -1465,9 +1465,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1148846857}
-        m_TargetAssemblyTypeName: SceneLoaderManager, Assembly-CSharp
-        m_MethodName: LoadMainPageScene
+      - m_Target: {fileID: 1702312108}
+        m_TargetAssemblyTypeName: StudentProfileManager, Assembly-CSharp
+        m_MethodName: logOut
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

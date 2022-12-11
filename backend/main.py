@@ -112,21 +112,6 @@ def get_all_students():
     return data
 
 
-# @app.post("/add_student_info", tags=['user'])
-# def add_student_info(data: UserInfo):
-#     authpath = "student_info"
-#     data_to_add = data.dict()
-
-#     data = db.load_json(authpath)
-#     # return data[0]['username']
-#     for index, i in enumerate(data):
-#         if data_to_add['username'] == i['username']:
-#             data[index] = data_to_add
-#             db.update_json(authpath, data)
-#             return "Successfully updated", data
-
-#     return "Failed to update, username not found!"
-
 @app.post("/add_userData", tags=['userData'])
 async def add_userData(data: UserData):
     authpath = "userData"
