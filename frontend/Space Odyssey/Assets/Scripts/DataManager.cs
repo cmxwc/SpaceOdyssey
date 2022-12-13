@@ -10,7 +10,7 @@ public class DataManager : MonoBehaviour
 {
     //public Student student;
     public static string username;
-    // public static List<string> subjectsTaken;
+    public static string selectedSubject;
 
 
     // Start is called before the first frame update

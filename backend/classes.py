@@ -25,3 +25,7 @@ class Question(BaseModel):
     questionAnsIndex: int
     questionAnsText: List[str]
     questionDifficulty: str
+
+class UserDataLogin(BaseModel):
+    username: str
+    lastLoginDay: str

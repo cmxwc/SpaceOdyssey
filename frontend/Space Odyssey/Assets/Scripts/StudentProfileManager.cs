@@ -54,15 +54,25 @@ public class StudentProfileManager : MonoBehaviour
         lastLoginLabel.text = profileDetails.lastLoginDay;
     }
 
+    // Student Last Login Details Class
+    public class StudentLastLoginDetails
+    {
+        public StudentLastLoginDetails(string username, string lastLoginDay)
+        {
+            this.username = username;
+            this.lastLoginDay = lastLoginDay;
+        }
+
+        public string username { get; set; }
+        public string lastLoginDay { get; set; }
+
+    }
     public void logOut()
     {
-        var url = http_url + "get_userData?username=" + username;
-        Student profileDetails = HttpManager.Get<Student>(url);
-        Student newLastLoginDetails = new Student(username, profileDetails.classNumber,
-                                                profileDetails.highestScore, profileDetails.numOfGamesCompleted,
-                                                profileDetails.levelsUnlocked, profileDetails.subjectsTaken, DateTime.Now.ToString());
-        var url_new = http_url + "update_userData";
-        HttpManager.Post<Student>(url_new, newLastLoginDetails);
+        var url = HttpManager.http_url + "update_userData_login";
+        StudentLastLoginDetails newLastLoginDetails = new StudentLastLoginDetails(username, DateTime.Now.ToString());
+        var response = HttpManager.Post(url, newLastLoginDetails);
+        Debug.Log("post" + response);
         SceneLoaderManager.LoadMainPageScene();
     }
 

@@ -9,7 +9,7 @@ public class SelectPlanetManager : MonoBehaviour
 
     public string username;
     public List<string> subjectsTaken;
-    public List<int> subjectsTakenId;
+    // public List<int> subjectsTakenId;
     public Image planetImage;
     public Sprite[] planetSprite;
     private int selectedPlanet = 0;
@@ -29,11 +29,10 @@ public class SelectPlanetManager : MonoBehaviour
         var url = HttpManager.http_url + "get_userData?username=" + username;
         Student profileDetails = HttpManager.Get<Student>(url);
         subjectsTaken = profileDetails.subjectsTaken;
-        foreach (string subject in subjectsTaken)
-        {
-            subjectsTakenId.Add(Planet.subjectIdMap[subject]);
-        }
-        Debug.Log(subjectsTakenId[0]);
+        // foreach (string subject in subjectsTaken)
+        // {
+        //     subjectsTakenId.Add(Planet.subjectIdMap[subject]);
+        // }
 
     }
     public void updateSelectedPlanet()
@@ -58,5 +57,11 @@ public class SelectPlanetManager : MonoBehaviour
             selectedPlanet = subjectsTaken.Count - 1;
         }
         updateSelectedPlanet();
+    }
+
+    public void confirmSelectedPlanet()
+    {
+        DataManager.selectedSubject = subjectsTaken[selectedPlanet];
+
     }
 }

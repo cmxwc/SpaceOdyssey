@@ -132,7 +132,20 @@ async def update_userData(data: UserData):
     olddata = db.load_json(authpath)
     for idx, i in enumerate(olddata):
         if i['username'] == data.username:
-            olddata[idx] = data_to_add
+            olddata[idx].lastLoginDay = data_to_add.lastLoginDay
+
+            db.update_json(authpath, olddata)
+            return "UserData successfully updated"
+    return "UserData Failed to Update - Username Not Found"
+
+@app.post("/update_userData_login", tags=['userData'])
+async def update_userData(data: UserDataLogin):
+    authpath = "userData"
+    data_to_add = data.dict()
+    olddata = db.load_json(authpath)
+    for idx, i in enumerate(olddata):
+        if i['username'] == data.username:
+            olddata[idx]["lastLoginDay"] = data_to_add["lastLoginDay"]
 
             db.update_json(authpath, olddata)
             return "UserData successfully updated"
