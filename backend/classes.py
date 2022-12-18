@@ -24,7 +24,7 @@ class Question(BaseModel):
     questionText: str
     questionAnsIndex: int
     questionAnsText: List[str]
-    questionDifficulty: str
+    questionLearningObj: int
 
 class UserDataLogin(BaseModel):
     username: str

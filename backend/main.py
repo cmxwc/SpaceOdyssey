@@ -3,8 +3,25 @@ import uvicorn
 from base import database
 from classes import *
 
+# adding cors headers
+from fastapi.middleware.cors import CORSMiddleware
+
+
 db = database('Space_DB')
 app = FastAPI()
+
+# adding cors urls
+origins = [
+    'http://127.0.0.1:5500',
+    'https://spaceodyssey-teacher-admin.netlify.app'
+]
+# add middleware
+app.add_middleware(CORSMiddleware, 
+                    allow_origins=origins, 
+                    allow_credentials=True,
+                    allow_methods=["*"],
+                    allow_headers=["*"]
+)
 
 
 @app.get("/")
@@ -170,6 +187,25 @@ async def get_userData_all():
     data = db.load_json(authpath)
     return data
 
+# QUESTIONS REQUESTS
+@app.post("/add_question", tags=['question'])
+async def add_question(data: Question):
+    authpath = "questionData"
+    olddata = db.load_json(authpath)
+    for i in olddata:
+        if i['questionSubject'] == data.questionSubject:
+            if i['questionId'] == data.questionId:
+                return "Failed: Question ID already exists"
+
+    data_to_add = data.dict()
+    db.save_json(authpath, data_to_add)
+    return "Question successfully added"
+
+@app.get("/get_question_all", tags=['question'])
+async def get_question_all():
+    authpath="questionData"
+    data = db.load_json(authpath)
+    return data
 
 if __name__ == "__main__":
     host = "0.0.0.0"
