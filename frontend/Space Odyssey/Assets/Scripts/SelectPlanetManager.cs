@@ -57,6 +57,6 @@ public class SelectPlanetManager : MonoBehaviour
     {
         DataManager.selectedSubject = subjectsTaken[selectedPlanet];
         Debug.Log("Selected Planet " + DataManager.selectedSubject);
-        SceneLoaderManager.LoadPlanetScene();
+        SceneLoaderManager.LoadSelectTopicScene();
     }
 }

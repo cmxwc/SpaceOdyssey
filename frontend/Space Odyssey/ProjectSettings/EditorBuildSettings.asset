@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ProfileScene.unity
     guid: e378bf9215812684d89c6323d5fa55cb
   - enabled: 1
-    path: Assets/Scenes/PlanetScene.unity
+    path: Assets/Scenes/SelectTopicScene.unity
     guid: bd53c977757724b4abe07161e939846a
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: 1a310751379020340a756da5028bd9d7
   m_configObjects: {}

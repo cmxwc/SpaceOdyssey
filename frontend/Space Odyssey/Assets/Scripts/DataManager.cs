@@ -11,6 +11,7 @@ public class DataManager : MonoBehaviour
     //public Student student;
     public static string username;
     public static string selectedSubject;
+    public static int selectedTopic;
 
 
     // Start is called before the first frame update

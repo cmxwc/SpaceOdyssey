@@ -17,13 +17,6 @@ public class Planet
         subjectIdMap.Add("Maths", 0);
         subjectIdMap.Add("English", 1);
         subjectIdMap.Add("Geography", 2);
-
-        // // Use the dictionary to map a color to its hexadecimal value
-        // string redHex = subjectIdMap["Red"]; // redHex = "#FF0000"
-
-        // // Use the dictionary to map a hexadecimal value to its color
-        // string hex = "#FFFF00";
-        // string color = subjectIdMap.FirstOrDefault(x => x.Value == hex).Key; // color = "Yellow"
     }
 
 }
