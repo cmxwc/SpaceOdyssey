@@ -46,6 +46,7 @@ public class SelectTopicManager : MonoBehaviour
     {
         DataManager.selectedTopic = selectedTopic;
         Debug.Log("Selected Topic " + DataManager.selectedTopic.ToString());
+        DataManager.health = DataManager.maxHp;
         SceneLoaderManager.LoadGameScene();
     }
 }
