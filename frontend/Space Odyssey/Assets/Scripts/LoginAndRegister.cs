@@ -16,7 +16,7 @@ public class LoginAndRegister : MonoBehaviour
     private string passwordEncrypted;
     public TextMeshProUGUI MessageLabel;
     public PasswordManager pwd;
-    private HttpManager http;
+
     public Student student;
     // private DataManager dataController;
 

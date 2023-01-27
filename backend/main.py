@@ -207,6 +207,45 @@ async def get_question_all():
     data = db.load_json(authpath)
     return data
 
+@app.get("/get_question_by_subject", tags=['question'])
+async def get_question_by_id(subject: str):
+    authpath = "questionData"
+    data = db.load_json(authpath)
+    result = []
+    for i in data:
+        if i['questionSubject'] == subject:
+            result.append(i)
+            
+    if result == []:
+        return "No question with subject {} found".format(subject)
+    else:
+        return result
+
+@app.get("/get_question_by_subject_topic", tags=['question'])
+async def get_question_by_id(subject: str, topic: int):
+    authpath = "questionData"
+    data = db.load_json(authpath)
+    result = []
+    for i in data:
+        if i['questionSubject'] == subject and i['questionTopic'] == topic:
+            result.append(i)
+            
+    if result == []:
+        return "No question with subject {} and topic {} found".format(subject, topic)
+    else:
+        return result
+
+
+@app.get("/get_question_by_subject_id_topic", tags=['question'])
+async def get_question_by_id(subject: str, questionId: int, topic: int):
+    authpath = "questionData"
+    data = db.load_json(authpath)
+    for i in data:
+        if i['questionSubject'] == subject and i['questionId'] == questionId and i['questionTopic'] ==  topic :
+            return i
+    return "No question with subject {}, topic {} and id {} found".format(subject, topic, questionId)
+
+
 if __name__ == "__main__":
     host = "0.0.0.0"
     port = 8000
