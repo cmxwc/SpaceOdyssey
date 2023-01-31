@@ -10,6 +10,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleHud enemyHud;
     // [SerializeField] BattleUnit enemyUnit;
     [SerializeField] BattleDialogBox dialogBox;
+    public List<Question> questionList;
 
 
     int currentAction;
@@ -24,7 +25,7 @@ public class BattleSystem : MonoBehaviour
 
     public IEnumerator SetupBattle()
     {
-        getQuestionDataBySubjectTopic("English", 1);
+        questionList = getQuestionDataBySubjectTopic("English", 1);
         // getQuestionDataBySubjectTopic(DataManager.selectedSubject, DataManager.selectedTopic);
         playerHud.SetData();
         enemyHud.SetEnemy();
@@ -33,15 +34,17 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         EnemyQuestion();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(5f);
         PlayerAction();
     }
 
-    public void getQuestionDataBySubjectTopic(string subject, int topic)
+    public List<Question> getQuestionDataBySubjectTopic(string subject, int topic)
     {
         var url = HttpManager.http_url + "get_question_by_subject?subject=" + subject + "&topic=" + topic;
-        List<Question> questionList = HttpManager.Get<List<Question>>(url);
-        Debug.Log(questionList[0].questionText);
+        // List<Question> questionList = HttpManager.Get<List<Question>>(url);
+        // Debug.Log(questionList[0].questionText);
+
+        return HttpManager.Get<List<Question>>(url);
     }
     void EnemyQuestion()
     {
@@ -126,5 +129,7 @@ public class BattleSystem : MonoBehaviour
             if (currentOption > 1)
                 currentOption -= 2;
         }
+
+        dialogBox.UpdateOptionSelection(currentOption, questionList[0].questionAnsText[currentOption]);
     }
 }

@@ -1115,7 +1115,11 @@ MonoBehaviour:
   actionText:
   - {fileID: 1378130081}
   - {fileID: 2129354480}
-  optionText: []
+  optionText:
+  - {fileID: 863409001}
+  - {fileID: 1049175486}
+  - {fileID: 344901604}
+  - {fileID: 965871758}
   detailsText: {fileID: 1219013472}
 --- !u!1 &436798419
 GameObject:
@@ -14879,6 +14883,7 @@ MonoBehaviour:
   playerHud: {fileID: 2003849634}
   enemyHud: {fileID: 483546860}
   dialogBox: {fileID: 346814381}
+  questionList: []
 --- !u!1 &1925803700
 GameObject:
   m_ObjectHideFlags: 0

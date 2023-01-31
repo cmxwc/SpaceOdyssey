@@ -63,7 +63,7 @@ public class BattleDialogBox : MonoBehaviour
         }
     }
 
-    public void UpdateOptionSelection(int selectedOption, List<string> questionOptions)
+    public void UpdateOptionSelection(int selectedOption, string currentOptionText)
     {
         for (int i = 0; i < optionText.Count; i++)
         {
@@ -72,6 +72,8 @@ public class BattleDialogBox : MonoBehaviour
             else
                 optionText[i].color = Color.black;
         }
+
+        detailsText.text = currentOptionText;
     }
 
 }
