@@ -13,9 +13,11 @@ public class BattleDialogBox : MonoBehaviour
     [SerializeField] GameObject actionSelector;
     [SerializeField] GameObject optionSelector;
     [SerializeField] GameObject optionDetails;
+    [SerializeField] GameObject questionBox;
 
     [SerializeField] List<TextMeshProUGUI> actionText;
     [SerializeField] List<TextMeshProUGUI> optionText;
+    [SerializeField] TextMeshProUGUI questionText;
 
     [SerializeField] TextMeshProUGUI detailsText;
 
@@ -34,6 +36,17 @@ public class BattleDialogBox : MonoBehaviour
             dialogText.text += letter;
             yield return new WaitForSeconds(1f / lettersPerSecond);
         }
+        yield return new WaitForSeconds(1f);
+    }
+
+    public IEnumerator TypeQuestionDialog(string question)
+    {
+        questionText.text = "";
+        foreach (var letter in question.ToCharArray())
+        {
+            questionText.text += letter;
+            yield return new WaitForSeconds(1f / lettersPerSecond);
+        }
     }
 
     public void EnableDialogText(bool enabled)
@@ -50,6 +63,13 @@ public class BattleDialogBox : MonoBehaviour
     {
         optionSelector.SetActive(enabled);
         optionDetails.SetActive(enabled);
+    }
+
+    public void EnableQuestionBox(bool enabled, string questionStr)
+    {
+        questionBox.SetActive(enabled);
+        questionText.text = questionStr;
+
     }
 
     public void UpdateActionSelection(int selectedAction)

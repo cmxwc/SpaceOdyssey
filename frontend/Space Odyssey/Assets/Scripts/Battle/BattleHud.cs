@@ -20,7 +20,12 @@ public class BattleHud : MonoBehaviour
     {
         nameText.text = "Enemy 1";
         levelText.text = "Lvl " + DataManager.level;
-        hpBar.SetHp((float)DataManager.health / DataManager.maxHp);
+        hpBar.SetHp((float)100 / 100);
+    }
+
+    public void UpdateHP(int newHP, int maxHP)
+    {
+        hpBar.SetHp((float)newHP / maxHP);
     }
 
 }

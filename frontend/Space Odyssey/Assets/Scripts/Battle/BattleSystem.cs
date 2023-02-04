@@ -11,6 +11,10 @@ public class BattleSystem : MonoBehaviour
     // [SerializeField] BattleUnit enemyUnit;
     [SerializeField] BattleDialogBox dialogBox;
     public List<Question> questionList;
+    public int currentQuestion = 0;
+    public int selectedOption;
+    // public Question currentQuestion;
+    int enemyHp = 100;
 
 
     int currentAction;
@@ -30,31 +34,28 @@ public class BattleSystem : MonoBehaviour
         playerHud.SetData();
         enemyHud.SetEnemy();
 
-        yield return StartCoroutine(dialogBox.TypeDialog("Enemy #1 has challenged you to a duel!"));
-        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(dialogBox.TypeDialog("An enemy has challenged you to a duel!"));
 
         EnemyQuestion();
-        yield return new WaitForSeconds(5f);
         PlayerAction();
     }
 
     public List<Question> getQuestionDataBySubjectTopic(string subject, int topic)
     {
         var url = HttpManager.http_url + "get_question_by_subject?subject=" + subject + "&topic=" + topic;
-        // List<Question> questionList = HttpManager.Get<List<Question>>(url);
-        // Debug.Log(questionList[0].questionText);
-
         return HttpManager.Get<List<Question>>(url);
     }
+
     void EnemyQuestion()
     {
         state = BattleState.EnemyQuestion;
-        StartCoroutine(dialogBox.TypeDialog("What does 1+1 equal to?"));
+        dialogBox.EnableQuestionBox(true, questionList[currentQuestion].questionText);
     }
 
     void PlayerAction()
     {
         state = BattleState.PlayerAction;
+
         StartCoroutine(dialogBox.TypeDialog("Choose an option:"));
         dialogBox.EnableActionSelector(true);
     }
@@ -66,6 +67,70 @@ public class BattleSystem : MonoBehaviour
         dialogBox.EnableDialogText(false);
         dialogBox.EnableOptionSelector(true);
     }
+
+    // Dialog Box response after player has selected option
+    IEnumerator PerformPlayerOption()
+    {
+        selectedOption = currentOption + 1;
+        yield return dialogBox.TypeDialog($"You selected option {selectedOption}.");
+
+        if (ValidateAnswer(currentOption))
+        {
+            yield return dialogBox.TypeDialog("Your answer is correct! Enemy has taken damage!");
+            TakeDamage("enemy");
+        }
+        else
+        {
+            yield return dialogBox.TypeDialog("Your answer is incorrect! You have taken damage!");
+            TakeDamage("player");
+        }
+
+        yield return new WaitForSeconds(2f);
+
+        if (enemyHp != 0)
+        {
+            currentQuestion++;
+            EnemyQuestion();
+            PlayerAction();
+        }
+
+    }
+
+    // Validate the answer submitted by user
+    public bool ValidateAnswer(int selectedOption)
+    {
+        if (selectedOption == questionList[currentQuestion].questionAnsIndex)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    public void TakeDamage(string player)
+    {
+        if (player == "enemy")
+        {
+            int numQns = 3;
+            int damage = 100 / numQns;
+
+            enemyHp -= damage;
+            enemyHud.UpdateHP(enemyHp, 100);
+        }
+        else
+        {
+            int damage = 10;
+            DataManager.health -= damage;
+
+            playerHud.UpdateHP(DataManager.health, DataManager.maxHp);
+        }
+
+
+    }
+
 
     private void Update()
     {
@@ -93,7 +158,7 @@ public class BattleSystem : MonoBehaviour
         }
         dialogBox.UpdateActionSelection(currentAction);
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             if (currentAction == 0)
             {
@@ -130,6 +195,15 @@ public class BattleSystem : MonoBehaviour
                 currentOption -= 2;
         }
 
-        dialogBox.UpdateOptionSelection(currentOption, questionList[0].questionAnsText[currentOption]);
+        dialogBox.UpdateOptionSelection(currentOption, questionList[currentQuestion].questionAnsText[currentOption]);
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            dialogBox.EnableOptionSelector(false);
+            dialogBox.EnableQuestionBox(false, "");
+            dialogBox.EnableDialogText(true);
+
+            StartCoroutine(PerformPlayerOption());
+        }
     }
 }
