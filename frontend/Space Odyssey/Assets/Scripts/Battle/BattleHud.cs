@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class BattleHud : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI levelText;
     public HpBar hpBar;
+
 
     public void SetData()
     {
@@ -23,9 +25,13 @@ public class BattleHud : MonoBehaviour
         hpBar.SetHp((float)100 / 100);
     }
 
-    public void UpdateHP(int newHP, int maxHP)
+    public IEnumerator UpdateHP(int newHP, int maxHP)
     {
-        hpBar.SetHp((float)newHP / maxHP);
+        if (newHP < 0)
+        {
+            newHP = 0;
+        }
+        yield return hpBar.SetHPSmooth((float)newHP / maxHP);
     }
 
 }

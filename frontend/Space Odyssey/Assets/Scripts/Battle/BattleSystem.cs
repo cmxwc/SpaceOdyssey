@@ -8,7 +8,8 @@ public class BattleSystem : MonoBehaviour
 {
     [SerializeField] BattleHud playerHud;
     [SerializeField] BattleHud enemyHud;
-    // [SerializeField] BattleUnit enemyUnit;
+    [SerializeField] BattleUnit playerUnit;
+    [SerializeField] BattleUnit enemyUnit;
     [SerializeField] BattleDialogBox dialogBox;
     public List<Question> questionList;
     public int currentQuestion = 0;
@@ -29,8 +30,11 @@ public class BattleSystem : MonoBehaviour
 
     public IEnumerator SetupBattle()
     {
+        DataManager.health = 100;
         questionList = getQuestionDataBySubjectTopic("English", 1);
         // getQuestionDataBySubjectTopic(DataManager.selectedSubject, DataManager.selectedTopic);
+        playerUnit.Setup();
+        enemyUnit.Setup();
         playerHud.SetData();
         enemyHud.SetEnemy();
 
@@ -77,21 +81,35 @@ public class BattleSystem : MonoBehaviour
         if (ValidateAnswer(currentOption))
         {
             yield return dialogBox.TypeDialog("Your answer is correct! Enemy has taken damage!");
-            TakeDamage("enemy");
+            playerUnit.PlayAttackAnimation();
+            enemyUnit.PlayHitAnimation();
+            yield return TakeDamage("enemy");
         }
         else
         {
             yield return dialogBox.TypeDialog("Your answer is incorrect! You have taken damage!");
-            TakeDamage("player");
+            enemyUnit.PlayAttackAnimation();
+            playerUnit.PlayHitAnimation();
+            yield return TakeDamage("player");
         }
 
         yield return new WaitForSeconds(2f);
 
-        if (enemyHp != 0)
+        if (enemyHp > 0 && DataManager.health > 0)
         {
             currentQuestion++;
             EnemyQuestion();
             PlayerAction();
+        }
+        else if (enemyHp <= 0)
+        {
+            yield return dialogBox.TypeDialog("Enemy has fainted!");
+            enemyUnit.PlayFaintAnimation();
+        }
+        else if (DataManager.health <= 0)
+        {
+            yield return dialogBox.TypeDialog("Your health has reached zero! You have fainted!");
+            playerUnit.PlayFaintAnimation();
         }
 
     }
@@ -109,8 +127,8 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-
-    public void TakeDamage(string player)
+    // Function for enemy or player to take damage
+    public IEnumerator TakeDamage(string player)
     {
         if (player == "enemy")
         {
@@ -118,17 +136,15 @@ public class BattleSystem : MonoBehaviour
             int damage = 100 / numQns;
 
             enemyHp -= damage;
-            enemyHud.UpdateHP(enemyHp, 100);
+            yield return enemyHud.UpdateHP(enemyHp, 100);
         }
         else
         {
             int damage = 10;
             DataManager.health -= damage;
 
-            playerHud.UpdateHP(DataManager.health, DataManager.maxHp);
+            yield return playerHud.UpdateHP(DataManager.health, DataManager.maxHp);
         }
-
-
     }
 
 
