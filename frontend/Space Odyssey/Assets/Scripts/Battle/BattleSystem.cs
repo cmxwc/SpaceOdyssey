@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleUnit playerUnit;
     [SerializeField] BattleUnit enemyUnit;
     [SerializeField] BattleDialogBox dialogBox;
+
+    public event Action<bool> OnBattleOver;
     public List<Question> questionList;
     public int currentQuestion = 0;
     public int selectedOption;
@@ -105,11 +108,15 @@ public class BattleSystem : MonoBehaviour
         {
             yield return dialogBox.TypeDialog("Enemy has fainted!");
             enemyUnit.PlayFaintAnimation();
+            yield return new WaitForSeconds(2f);
+            OnBattleOver(true);
         }
         else if (DataManager.health <= 0)
         {
             yield return dialogBox.TypeDialog("Your health has reached zero! You have fainted!");
             playerUnit.PlayFaintAnimation();
+            yield return new WaitForSeconds(2f);
+            OnBattleOver(true);
         }
 
     }
@@ -148,7 +155,7 @@ public class BattleSystem : MonoBehaviour
     }
 
 
-    private void Update()
+    public void HandleUpdate()
     {
         if (state == BattleState.PlayerAction)
         {
