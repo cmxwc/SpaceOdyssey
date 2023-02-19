@@ -12360,6 +12360,7 @@ GameObject:
   - component: {fileID: 994114149}
   - component: {fileID: 994114148}
   - component: {fileID: 994114150}
+  - component: {fileID: 994114151}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -12412,6 +12413,27 @@ MonoBehaviour:
   dialogBox: {fileID: 544150660}
   dialogText: {fileID: 468310628}
   lettersPerSecond: 45
+--- !u!114 &994114151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994114147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57f30f10d2594f48adda59235ed7b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  solidObjectsLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  grassLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1049175483
 GameObject:
   m_ObjectHideFlags: 0
@@ -16626,6 +16648,8 @@ GameObject:
   - component: {fileID: 1869939687}
   - component: {fileID: 1869939686}
   - component: {fileID: 1869939688}
+  - component: {fileID: 1869939690}
+  - component: {fileID: 1869939689}
   m_Layer: 9
   m_Name: NPC
   m_TagString: Untagged
@@ -16763,6 +16787,57 @@ MonoBehaviour:
     lines:
     - Hey there,
     - Let's Battle!
+  movementPattern:
+  - {x: 2, y: 0}
+  - {x: 0, y: -2}
+  - {x: -2, y: 0}
+  - {x: 0, y: 2}
+  timeBetweenPattern: 3
+--- !u!114 &1869939689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869939683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e418ca00089eaca429b21fe8f6099ceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkDownSprites:
+  - {fileID: -335058761, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: 1375561087, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: -194450618, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: 435349582, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  walkUpSprites:
+  - {fileID: -962402278, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: -1743889097, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: -1961123551, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: 1830389944, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  walkLeftSprites:
+  - {fileID: 1422319597, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: 1661951098, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: -877972882, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: -832953502, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  walkRightSprites:
+  - {fileID: -1335067051, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: -608061816, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: -570179153, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+  - {fileID: 1498643388, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
+--- !u!114 &1869939690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869939683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 390c12492e0a78f4e867a0ac243867a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
 --- !u!1 &1890121788
 GameObject:
   m_ObjectHideFlags: 0
@@ -17532,6 +17607,7 @@ GameObject:
   - component: {fileID: 1980046864}
   - component: {fileID: 1980046866}
   - component: {fileID: 1980046867}
+  - component: {fileID: 1980046868}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -17618,16 +17694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fc8dbcf507b46049a1739ca4f5c4813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  solidObjectsLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  interactableLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  grassLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &1980046867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17660,6 +17726,19 @@ MonoBehaviour:
   - {fileID: -159030349, guid: f2f22d6c9a8a0ff49bd54248bc3e4717, type: 3}
   - {fileID: -2013508772, guid: f2f22d6c9a8a0ff49bd54248bc3e4717, type: 3}
   - {fileID: -1140708187, guid: f2f22d6c9a8a0ff49bd54248bc3e4717, type: 3}
+--- !u!114 &1980046868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980046863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 390c12492e0a78f4e867a0ac243867a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
 --- !u!1 &2003849630
 GameObject:
   m_ObjectHideFlags: 0
