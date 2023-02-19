@@ -12,11 +12,11 @@ public class PlayerController : MonoBehaviour
     public LayerMask interactableLayer;
     public LayerMask grassLayer;
     public event Action OnEncountered;
-    private Animator animator;
+    private CharacterAnimator animator;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponent<CharacterAnimator>();
     }
 
     // Update is called once per frame
@@ -31,8 +31,8 @@ public class PlayerController : MonoBehaviour
 
             if (input != Vector2.zero)
             {
-                animator.SetFloat("moveX", input.x);   // for animation of movement if input is not 0
-                animator.SetFloat("moveY", input.y);
+                animator.MoveX = input.x;   // for animation of movement if input is not 0
+                animator.MoveY = input.y;
 
                 var targetPos = transform.position;  // current pos of player, plus input
                 targetPos.x += input.x;
@@ -43,15 +43,15 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        animator.SetBool("isMoving", isMoving);
+        animator.IsMoving = isMoving;
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Return))
             Interact();
     }
 
     void Interact()
     {
-        var facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
+        var facingDir = new Vector3(animator.MoveX, animator.MoveY);
         var interactPos = transform.position + facingDir;
 
         //Debug.DrawLine(transform.position, interactPos, Color.green, 0.5f);
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
             if (UnityEngine.Random.Range(1, 101) <= 10)
             {
                 Debug.Log("Encountered wild animal");
-                animator.SetBool("isMoving", false);
+                animator.IsMoving = false;
                 OnEncountered();
             }
 
