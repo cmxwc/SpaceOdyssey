@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //[SerializeField] string name;
+    //[SerializeField] Sprite sprite;
+
     private Vector2 input;
     public event Action OnEncountered;
+    public event Action<Collider2D> OnEnterEnemysView;
+
     private Character character;
 
 
@@ -27,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
             if (input != Vector2.zero)
             {
-                StartCoroutine(character.Move(input, CheckForEncounters));
+                StartCoroutine(character.Move(input, onMoveOver));
             }
         }
         character.HandleUpdate();
@@ -47,10 +52,15 @@ public class PlayerController : MonoBehaviour
         var collider = Physics2D.OverlapCircle(interactPos, 0.3f, GameLayers.i.InteractableLayer);
         if (collider != null)
         {
-            collider.GetComponent<Interactable>()?.Interact();
+            collider.GetComponent<Interactable>()?.Interact(transform);
         }
     }
 
+    private void onMoveOver()
+    {
+        CheckForEncounters();
+        CheckIfInEnemysView();
+    }
 
     private void CheckForEncounters()
     {
@@ -58,11 +68,30 @@ public class PlayerController : MonoBehaviour
         {
             if (UnityEngine.Random.Range(1, 101) <= 10)
             {
-                Debug.Log("Encountered wild animal");
+                Debug.Log("Encountered an enemy");
                 character.Animator.IsMoving = false;
                 OnEncountered();
             }
         }
     }
+
+    private void CheckIfInEnemysView()
+    {
+        var collider = Physics2D.OverlapCircle(transform.position, 0.2f, GameLayers.i.FovLayer);
+        if (collider != null)
+        {
+            character.Animator.IsMoving = false;
+            OnEnterEnemysView?.Invoke(collider);
+        }
+    }
+
+    //public string Name
+    //{
+    //    get => name;
+    //}
+    //public Sprite Sprite
+    //{
+    //    get => sprite;
+    //}
 
 }

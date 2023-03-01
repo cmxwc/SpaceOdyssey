@@ -15,8 +15,8 @@ TagManager:
   - LongGrass
   - SolidObjects
   - Interactable
-  - 
-  - 
+  - Player
+  - Fov Layer
   - 
   - 
   - 

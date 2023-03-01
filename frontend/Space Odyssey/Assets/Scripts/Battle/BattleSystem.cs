@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum BattleState { Start, PlayerAction, EnemyQuestion, PlayerOption, Busy }
 
@@ -12,6 +13,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleUnit playerUnit;
     [SerializeField] BattleUnit enemyUnit;
     [SerializeField] BattleDialogBox dialogBox;
+    //[SerializeField] Image enemyImage;
+    //[SerializeField] Image playerImage;
 
     public event Action<bool> OnBattleOver;
     public List<Question> questionList;
@@ -20,14 +23,20 @@ public class BattleSystem : MonoBehaviour
     // public Question currentQuestion;
     int enemyHp = 100;
 
-
     int currentAction;
     int currentOption;
 
+    PlayerController player;
+    EnemyController enemy;
+
     BattleState state;
 
-    private void Start()
+
+    public void StartEnemyBattle()
     {
+        player = GetComponent<PlayerController>();
+        enemy = GetComponent<EnemyController>();
+
         StartCoroutine(SetupBattle());
     }
 
