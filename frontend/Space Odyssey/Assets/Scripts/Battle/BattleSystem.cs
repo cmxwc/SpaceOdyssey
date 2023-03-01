@@ -31,7 +31,10 @@ public class BattleSystem : MonoBehaviour
 
     BattleState state;
 
-
+    public void StartBattle()
+    {
+        StartCoroutine(SetupBattle());
+    }
     public void StartEnemyBattle()
     {
         player = GetComponent<PlayerController>();

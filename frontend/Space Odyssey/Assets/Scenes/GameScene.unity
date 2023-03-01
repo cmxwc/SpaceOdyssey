@@ -18539,7 +18539,7 @@ MonoBehaviour:
   - {fileID: -608061816, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: -570179153, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: 1498643388, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
-  defaultDirection: 0
+  defaultDirection: 1
 --- !u!114 &2142395380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18685,4 +18685,7 @@ MonoBehaviour:
   dialog:
     lines:
     - Ho ho ho... Are you ready, let's battle! >.<
+  dialogAfterBattle:
+    lines:
+    - You have done better than I expected....
   fov: {fileID: 2134905874}

@@ -44,17 +44,34 @@ public class GameController : MonoBehaviour
         };
     }
 
+    EnemyController enemy;
+
     public void StartBattle()
     {
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
 
+        battleSystem.StartBattle();
+    }
+    public void StartEnemyBattle(EnemyController enemy)
+    {
+        state = GameState.Battle;
+        battleSystem.gameObject.SetActive(true);
+        worldCamera.gameObject.SetActive(false);
+
+        this.enemy = enemy;
+
         battleSystem.StartEnemyBattle();
     }
 
     void EndBattle(bool won)
     {
+        if (enemy!= null && won == true)
+        {
+            enemy.BattleLost();
+            enemy = null;
+        }
         state = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(true);

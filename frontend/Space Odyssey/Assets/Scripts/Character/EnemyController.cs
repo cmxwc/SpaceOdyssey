@@ -8,8 +8,11 @@ public class EnemyController : MonoBehaviour
     //[SerializeField] Sprite sprite;
     [SerializeField] GameObject exclaimation;
     [SerializeField] Dialog dialog;
+    [SerializeField] Dialog dialogAfterBattle;
     [SerializeField] GameObject fov;
 
+    //State
+    bool battleLost = false;
 
     Character character;
 
@@ -21,6 +24,23 @@ public class EnemyController : MonoBehaviour
     public void Start()
     {
         SetFovRotation(character.Animator.DefaultDirection);
+    }
+
+    public void Interact(Transform initiator)
+    {
+        character.LookTowards(initiator.position);
+        if (!battleLost)
+        {
+            StartCoroutine(DialogManager.Instance.ShowDialog(dialog, () =>
+            {
+                Debug.Log("Start battle");
+                GameController.Instance.StartEnemyBattle(this);
+            }));
+        }
+        else
+        {
+            StartCoroutine(DialogManager.Instance.ShowDialog(dialogAfterBattle));
+        }
     }
 
     public IEnumerator TriggerEnemyBattle(PlayerController player)
@@ -41,9 +61,15 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(DialogManager.Instance.ShowDialog(dialog, () =>
         {
             Debug.Log("Start battle");
-            GameController.Instance.StartBattle();
+            GameController.Instance.StartEnemyBattle(this);
         }));
 
+    }
+
+    public void BattleLost()
+    {
+        battleLost = true;
+        fov.gameObject.SetActive(false);
     }
 
     public void SetFovRotation(FacingDirection dir)
