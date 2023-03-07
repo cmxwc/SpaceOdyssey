@@ -12,6 +12,7 @@ app = FastAPI()
 
 # adding cors urls
 origins = [
+    'http://127.0.0.1:5501',
     'http://127.0.0.1:5500',
     'https://spaceodyssey-teacher-admin.netlify.app'
 ]
@@ -29,7 +30,7 @@ def read_root():
     return {"Hello": "Hello World"}
 
 
-# AUTHENTICATION REQUESTS
+##### AUTHENTICATION REQUESTS ###############################
 @app.post("/register_student", tags=['authentication'])
 def register_student(data: User):
     authpath = "auth_student"
@@ -88,7 +89,7 @@ def register_teacher(data: User):
     return "Successfully registered!", data_to_add
 
 
-@app.get("/login_teacher", tags=['authentication'])
+@app.post("/login_teacher", tags=['authentication'])
 def login_teacher(data: User):
     authpath = "auth_teacher"
     username = data.username
@@ -105,7 +106,7 @@ def login_teacher(data: User):
     return "Username does not exist!"
 
 
-# USER REQUESTS
+######### USER REQUESTS ###############################################
 @app.get("/users", tags=['user'])
 def get_all_users():
     authpath = "auth_student"
@@ -142,19 +143,6 @@ async def add_userData(data: UserData):
     return "UserData successfully registered"
 
 
-@app.post("/update_userData", tags=['userData'])
-async def update_userData(data: UserData):
-    authpath = "userData"
-    data_to_add = data.dict()
-    olddata = db.load_json(authpath)
-    for idx, i in enumerate(olddata):
-        if i['username'] == data.username:
-            olddata[idx].lastLoginDay = data_to_add.lastLoginDay
-
-            db.update_json(authpath, olddata)
-            return "UserData successfully updated"
-    return "UserData Failed to Update - Username Not Found"
-
 @app.post("/update_userData_login", tags=['userData'])
 async def update_userData(data: UserDataLogin):
     authpath = "userData"
@@ -187,7 +175,7 @@ async def get_userData_all():
     data = db.load_json(authpath)
     return data
 
-# QUESTIONS REQUESTS
+############# QUESTIONS REQUESTS ################################################
 @app.post("/add_question", tags=['question'])
 async def add_question(data: Question):
     authpath = "questionData"
@@ -244,6 +232,30 @@ async def get_question_by_id(subject: str, questionId: int, topic: int):
         if i['questionSubject'] == subject and i['questionId'] == questionId and i['questionTopic'] ==  topic :
             return i
     return "No question with subject {}, topic {} and id {} found".format(subject, topic, questionId)
+
+
+######## SCORES REQUEST #######################################
+@app.post("/add_highscore", tags=['scores'])
+async def add_highscore(subject:str, data: HighScores):
+    authpath = "highscoreData"
+    data_to_add = data.dict()
+    olddata = db.load_json(authpath)
+    for idx, i in enumerate(olddata[0][subject]):
+        if i['username'] == data.username:
+            olddata[0][subject][idx]['score'] = data.score
+            db.update_json(authpath, olddata)
+            return "Highscore has been updated for {}".format(subject)
+    olddata[0][subject].append(data_to_add)
+    db.update_json(authpath, olddata)
+    return "New highscore successfully added for {}".format(subject)
+
+
+@app.post("/get_highscore", tags=['scores'])
+async def get_highscore(subject: str):
+    authpath="highscoreData"
+    data = db.load_json(authpath)
+    return data[0][subject]
+
 
 
 if __name__ == "__main__":

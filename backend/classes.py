@@ -29,3 +29,7 @@ class Question(BaseModel):
 class UserDataLogin(BaseModel):
     username: str
     lastLoginDay: str
+
+class HighScores(BaseModel):
+    username: str
+    score: int
