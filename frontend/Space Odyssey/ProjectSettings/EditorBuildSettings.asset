@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ProfileScene.unity
     guid: e378bf9215812684d89c6323d5fa55cb
   - enabled: 1
+    path: Assets/Scenes/LeaderboardScene.unity
+    guid: 3782b9e864ea86f48aaf4f1afb6b7541
+  - enabled: 1
     path: Assets/Scenes/SelectTopicScene.unity
     guid: bd53c977757724b4abe07161e939846a
   - enabled: 1
