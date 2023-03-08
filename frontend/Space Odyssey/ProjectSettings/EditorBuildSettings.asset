@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LeaderboardScene.unity
     guid: 3782b9e864ea86f48aaf4f1afb6b7541
   - enabled: 1
+    path: Assets/Scenes/AchievementsScene.unity
+    guid: c46492d8db93bc54e981e60217a15444
+  - enabled: 1
     path: Assets/Scenes/SelectTopicScene.unity
     guid: bd53c977757724b4abe07161e939846a
   - enabled: 1

@@ -256,7 +256,31 @@ async def get_highscore(subject: str):
     data = db.load_json(authpath)
     return data[0][subject]
 
+######## ACHIEVEMENTS REQUEST #######################################
+@app.post("/add_achievements", tags=['userData'])
+async def update_userData(username: str, achievement: str):
+    authpath = "achievementsData"
+    data_to_add = {"username": username, achievement: True}
+    olddata = db.load_json(authpath)
+    for idx, i in enumerate(olddata):
+        if i['username'] == username:
+            if achievement not in i:
+                olddata[idx][achievement] = True
+                db.update_json(authpath, olddata)
+                return "AchievementsData successfully updated"
+            else:
+                return "Achievement already obtained"
+    db.save_json(authpath, data_to_add)
+    return "AchievementsData successfully updated"
 
+@app.get("/get_achievements", tags=['scores'])
+async def get_highscore(username: str):
+    authpath="achievementsData"
+    data = db.load_json(authpath)
+    for i in data:
+        if i["username"] == username:
+            return i
+    return "No achievements yet"
 
 if __name__ == "__main__":
     host = "0.0.0.0"

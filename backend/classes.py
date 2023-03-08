@@ -33,3 +33,7 @@ class UserDataLogin(BaseModel):
 class HighScores(BaseModel):
     username: str
     score: int
+
+class Achievements(BaseModel):
+    username: str
+    achievementIdx: int 

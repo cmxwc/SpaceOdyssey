@@ -22,6 +22,20 @@ public class HttpManager
         return result;
     }
 
+    public static string Task(string url)
+    {
+        // using (var client = new HttpClient())
+        // {
+        //     var response = await client.GetAsync(url);
+        //     response.EnsureSuccessStatusCode();
+        //     return await response.Content.ReadAsStringAsync();
+        // }
+        HttpClient client = new HttpClient();
+        HttpResponseMessage response = client.GetAsync(url).GetAwaiter().GetResult();
+        string responseStr = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        return responseStr;
+    }
+
     public static string Post<TPostType>(string url, TPostType obj)
     {
         HttpClient client = new HttpClient();
