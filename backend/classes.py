@@ -30,8 +30,6 @@ class UserDataLogin(BaseModel):
     username: str
     lastLoginDay: str
 
-class
-
 class HighScores(BaseModel):
     username: str
     score: int

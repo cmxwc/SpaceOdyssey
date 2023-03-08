@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class EnemyController : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField] Dialog dialog;
     [SerializeField] Dialog dialogAfterBattle;
     [SerializeField] GameObject fov;
+    [SerializeField] List<int> QuestionListIndex;
+    [SerializeField] List<Question> selectedQuestions;
+    [SerializeField] bool isBoss;
 
     //State
     bool battleLost = false;
@@ -85,14 +89,25 @@ public class EnemyController : MonoBehaviour
         fov.transform.eulerAngles = new Vector3(0f, 0f, angle);
     }
 
-    //public string Name
-    //{
-    //    get => name;
-    //}
+    public List<Question> GetSelectedQuestions()
+    {
+        List<Question> selectedQuestions = QuestionListIndex.Select(i => GameDataManager.questionList[i]).ToList();
+        return selectedQuestions;
+    }
+
+    public List<Question> Questions
+    {
+        get => GetSelectedQuestions();
+    }
+
+    // public string Name
+    // {
+    //     get => name;
+    // }
     //public Sprite Sprite
     //{
     //    get => sprite;
     //}
 
-    
+
 }

@@ -10757,6 +10757,8 @@ MonoBehaviour:
     lines:
     - You have done better than I expected....
   fov: {fileID: 377380197}
+  QuestionListIndex: 0800000009000000
+  selectedQuestions: []
 --- !u!114 &813299048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11289,6 +11291,8 @@ MonoBehaviour:
     lines:
     - You have done better than I expected....
   fov: {fileID: 1459699723}
+  QuestionListIndex: 0200000003000000
+  selectedQuestions: []
 --- !u!114 &868973014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28849,6 +28853,8 @@ MonoBehaviour:
     lines:
     - You have done better than I expected....
   fov: {fileID: 834708593}
+  QuestionListIndex: 0600000007000000
+  selectedQuestions: []
 --- !u!114 &1324202513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36458,6 +36464,8 @@ MonoBehaviour:
     lines:
     - You have done better than I expected....
   fov: {fileID: 1262013900}
+  QuestionListIndex: 0400000005000000
+  selectedQuestions: []
 --- !u!114 &1747332871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36979,6 +36987,8 @@ MonoBehaviour:
     lines:
     - You have done better than I expected....
   fov: {fileID: 139691978}
+  QuestionListIndex: 0a0000000b000000
+  selectedQuestions: []
 --- !u!114 &1847138053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37293,11 +37303,7 @@ MonoBehaviour:
     lines:
     - Hey there,
     - Have fun battling and answer as many questions correctly as possible!
-  movementPattern:
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
+  movementPattern: []
   timeBetweenPattern: 3
 --- !u!114 &1869939689
 MonoBehaviour:
@@ -37306,7 +37312,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1869939683}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e418ca00089eaca429b21fe8f6099ceb, type: 3}
   m_Name: 
@@ -37331,7 +37337,7 @@ MonoBehaviour:
   - {fileID: -608061816, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: -570179153, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: 1498643388, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
-  defaultDirection: 1
+  defaultDirection: 0
 --- !u!114 &1869939690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39214,3 +39220,5 @@ MonoBehaviour:
     lines:
     - You have done better than I expected....
   fov: {fileID: 2134905874}
+  QuestionListIndex: 0000000001000000
+  selectedQuestions: []

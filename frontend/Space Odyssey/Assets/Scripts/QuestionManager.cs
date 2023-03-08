@@ -8,6 +8,11 @@ using TMPro;
 
 public class QuestionManager : MonoBehaviour
 {
+    public static List<Question> getQuestionDataBySubjectTopic(string subject, int topic)
+    {
+        var url = HttpManager.http_url + "get_question_by_subject?subject=" + subject + "&topic=" + topic;
+        return HttpManager.Get<List<Question>>(url);
+    }
 
 
     // public void getQuestionDataBySubjectTopic(string subject, int topic)

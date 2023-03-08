@@ -20,6 +20,9 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        // GameDataManager.questionList = QuestionManager.getQuestionDataBySubjectTopic(DataManager.selectedSubject, DataManager.selectedTopic);
+        GameDataManager.questionList = QuestionManager.getQuestionDataBySubjectTopic("English", 1);
+        Debug.Log("Questions have been retrived" + GameDataManager.questionList[0].questionText);
         playerController.OnEncountered += StartBattle;
         battleSystem.OnBattleOver += EndBattle;
 
@@ -62,12 +65,12 @@ public class GameController : MonoBehaviour
 
         this.enemy = enemy;
 
-        battleSystem.StartEnemyBattle();
+        battleSystem.StartEnemyBattle(enemy);
     }
 
     void EndBattle(bool won)
     {
-        if (enemy!= null && won == true)
+        if (enemy != null && won == true)
         {
             enemy.BattleLost();
             enemy = null;

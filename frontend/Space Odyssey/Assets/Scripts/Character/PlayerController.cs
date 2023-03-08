@@ -85,10 +85,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //public string Name
-    //{
-    //    get => name;
-    //}
+    public string Name
+    {
+        get => "why";
+    }
     //public Sprite Sprite
     //{
     //    get => sprite;

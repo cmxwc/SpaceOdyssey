@@ -32,6 +32,7 @@ public class BattleUnit : MonoBehaviour
 
     public void Setup()
     {
+        image = GetComponent<Image>();
         PlayEnterAnimation();
     }
 

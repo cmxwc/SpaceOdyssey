@@ -18,7 +18,7 @@ public class BattleSystem : MonoBehaviour
 
     public event Action<bool> OnBattleOver;
     public List<Question> questionList;
-    public int currentQuestion = 0;
+    public int currentQuestion;
     public int selectedOption;
     // public Question currentQuestion;
     int enemyHp = 100;
@@ -35,19 +35,23 @@ public class BattleSystem : MonoBehaviour
     {
         StartCoroutine(SetupBattle());
     }
-    public void StartEnemyBattle()
+    public void StartEnemyBattle(EnemyController enemy)
     {
-        player = GetComponent<PlayerController>();
-        enemy = GetComponent<EnemyController>();
-
-        StartCoroutine(SetupBattle());
+        // player = GetComponent<PlayerController>();
+        // enemy = GetComponent<EnemyController>();
+        currentQuestion = 0;
+        StartCoroutine(SetupBattle(enemy.Questions));
     }
 
-    public IEnumerator SetupBattle()
+    public IEnumerator SetupBattle(List<Question> questions = null)
     {
         DataManager.health = 100;
-        questionList = getQuestionDataBySubjectTopic("English", 1);
+        // questionList = getQuestionDataBySubjectTopic("English", 1);
+        // questionList = enemy.GetSelectedQuestions();
+        questionList = questions;
+        Debug.Log(questionList.Count);
         // getQuestionDataBySubjectTopic(DataManager.selectedSubject, DataManager.selectedTopic);
+
         playerUnit.Setup();
         enemyUnit.Setup();
         playerHud.SetData();
@@ -57,12 +61,6 @@ public class BattleSystem : MonoBehaviour
 
         EnemyQuestion();
         PlayerAction();
-    }
-
-    public List<Question> getQuestionDataBySubjectTopic(string subject, int topic)
-    {
-        var url = HttpManager.http_url + "get_question_by_subject?subject=" + subject + "&topic=" + topic;
-        return HttpManager.Get<List<Question>>(url);
     }
 
     void EnemyQuestion()
@@ -110,25 +108,33 @@ public class BattleSystem : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        if (enemyHp > 0 && DataManager.health > 0)
-        {
-            currentQuestion++;
-            EnemyQuestion();
-            PlayerAction();
-        }
-        else if (enemyHp <= 0)
+        if (enemyHp <= 0)
         {
             yield return dialogBox.TypeDialog("Enemy has fainted!");
-            enemyUnit.PlayFaintAnimation();
+            // enemyUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
             OnBattleOver(true);
         }
         else if (DataManager.health <= 0)
         {
             yield return dialogBox.TypeDialog("Your health has reached zero! You have fainted!");
-            playerUnit.PlayFaintAnimation();
+            // playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
             OnBattleOver(true);
+        }
+        else if (currentQuestion == questionList.Count - 1)
+        {
+            yield return dialogBox.TypeDialog("You have completed the battle! The battle is ending now!");
+            // enemyUnit.PlayFaintAnimation();
+            // playerUnit.PlayFaintAnimation();
+            yield return new WaitForSeconds(2f);
+            OnBattleOver(true);
+        }
+        else if (enemyHp > 0 && DataManager.health > 0)
+        {
+            currentQuestion++;
+            EnemyQuestion();
+            PlayerAction();
         }
 
     }
