@@ -392,7 +392,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This is PLANET SCENE
+  m_text: Select Galaxy
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c55f757a213e31649ab7131750c905ed, type: 2}
   m_sharedMaterial: {fileID: 1393249764811659517, guid: c55f757a213e31649ab7131750c905ed, type: 2}
@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 446485446}
   - component: {fileID: 446485445}
   m_Layer: 5
-  m_Name: Topic Image
+  m_Name: Galaxy Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -497,7 +497,7 @@ RectTransform:
   m_GameObject: {fileID: 446485443}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1557199010}
@@ -548,7 +548,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -357773800, guid: 53b0d4c8dc335a2448475a2e2de6865b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 08aa80354a2ecac49b98108990832d9d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -662,7 +662,7 @@ GameObject:
   - component: {fileID: 566370473}
   - component: {fileID: 566370472}
   m_Layer: 5
-  m_Name: Topic Label
+  m_Name: Galaxy Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -688,7 +688,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TOPIC NAME
+  m_text: GALAXY NAME
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c55f757a213e31649ab7131750c905ed, type: 2}
   m_sharedMaterial: {fileID: 1393249764811659517, guid: c55f757a213e31649ab7131750c905ed, type: 2}
@@ -785,6 +785,58 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000022888184, y: -347.1}
   m_SizeDelta: {x: 1920, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &676991391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 676991393}
+  - component: {fileID: 676991392}
+  m_Layer: 0
+  m_Name: SelectGalaxyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &676991392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676991391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417284a55ce513e4aaff68df3f55fe90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  username: 
+  subjectsTaken: []
+  galaxyImage: {fileID: 446485446}
+  galaxySprite:
+  - {fileID: 21300000, guid: 08aa80354a2ecac49b98108990832d9d, type: 3}
+  - {fileID: 21300000, guid: 1c38d7f5de66cfe4393f89ac41669586, type: 3}
+  - {fileID: 21300000, guid: a373d04a67ffcb648a9f037048a280fd, type: 3}
+  galaxyLabel: {fileID: 566370472}
+--- !u!4 &676991393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676991391}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.835655, y: -1.0532193, z: -0.009805163}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &678540846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,9 +1203,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1815638247}
-        m_TargetAssemblyTypeName: SelectTopicManager, Assembly-CSharp
-        m_MethodName: nextTopic
+      - m_Target: {fileID: 676991392}
+        m_TargetAssemblyTypeName: SelectGalaxyManager, Assembly-CSharp
+        m_MethodName: nextGalaxy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1258,7 +1310,7 @@ GameObject:
   - component: {fileID: 1404762394}
   - component: {fileID: 1404762393}
   m_Layer: 5
-  m_Name: Start Button
+  m_Name: Enter Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1329,9 +1381,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1815638247}
-        m_TargetAssemblyTypeName: SelectTopicManager, Assembly-CSharp
-        m_MethodName: confirmSelectedPlanet
+      - m_Target: {fileID: 676991392}
+        m_TargetAssemblyTypeName: SelectGalaxyManager, Assembly-CSharp
+        m_MethodName: confirmSelectedGalaxy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1463,9 +1515,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1815638247}
-        m_TargetAssemblyTypeName: SelectTopicManager, Assembly-CSharp
-        m_MethodName: prevTopic
+      - m_Target: {fileID: 676991392}
+        m_TargetAssemblyTypeName: SelectGalaxyManager, Assembly-CSharp
+        m_MethodName: prevGalaxy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1571,7 +1623,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: START
+  m_text: ENTER
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c55f757a213e31649ab7131750c905ed, type: 2}
   m_sharedMaterial: {fileID: 1393249764811659517, guid: c55f757a213e31649ab7131750c905ed, type: 2}
@@ -1748,7 +1800,6 @@ RectTransform:
   - {fileID: 1404762392}
   - {fileID: 1458526509}
   - {fileID: 1062519843}
-  - {fileID: 2074868226}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1757,57 +1808,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1815638246
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1815638248}
-  - component: {fileID: 1815638247}
-  m_Layer: 0
-  m_Name: SelectTopicManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1815638247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815638246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6e440256198fc4dba434342b2ebaa3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  username: 
-  topicImage: {fileID: 0}
-  topicSprite:
-  - {fileID: -357773800, guid: 53b0d4c8dc335a2448475a2e2de6865b, type: 3}
-  - {fileID: -479609865, guid: 78c56799340d93242a9d481b9265c3f4, type: 3}
-  - {fileID: 1892359333, guid: 4967ecb9d2c49d24882ae2723c7ffc25, type: 3}
-  topicLabel: {fileID: 566370472}
---- !u!4 &1815638248
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815638246}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.835655, y: -1.0532193, z: -0.009805163}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2048360920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,90 +1943,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2048360920}
   m_CullTransparentMesh: 1
---- !u!1 &2074868225
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2074868226}
-  - component: {fileID: 2074868227}
-  m_Layer: 0
-  m_Name: Planet
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2074868226
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074868225}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -967.83563, y: -541.0532, z: -0.009805163}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1557199010}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &2074868227
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074868225}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -357773800, guid: 53b0d4c8dc335a2448475a2e2de6865b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &2082572998
 GameObject:
   m_ObjectHideFlags: 0

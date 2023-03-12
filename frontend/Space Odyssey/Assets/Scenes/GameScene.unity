@@ -10759,6 +10759,7 @@ MonoBehaviour:
   fov: {fileID: 377380197}
   QuestionListIndex: 0800000009000000
   selectedQuestions: []
+  isBoss: 0
 --- !u!114 &813299048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11293,6 +11294,7 @@ MonoBehaviour:
   fov: {fileID: 1459699723}
   QuestionListIndex: 0200000003000000
   selectedQuestions: []
+  isBoss: 0
 --- !u!114 &868973014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28855,6 +28857,7 @@ MonoBehaviour:
   fov: {fileID: 834708593}
   QuestionListIndex: 0600000007000000
   selectedQuestions: []
+  isBoss: 0
 --- !u!114 &1324202513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36466,6 +36469,7 @@ MonoBehaviour:
   fov: {fileID: 1262013900}
   QuestionListIndex: 0400000005000000
   selectedQuestions: []
+  isBoss: 0
 --- !u!114 &1747332871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36989,6 +36993,7 @@ MonoBehaviour:
   fov: {fileID: 139691978}
   QuestionListIndex: 0a0000000b000000
   selectedQuestions: []
+  isBoss: 1
 --- !u!114 &1847138053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39222,3 +39227,4 @@ MonoBehaviour:
   fov: {fileID: 2134905874}
   QuestionListIndex: 0000000001000000
   selectedQuestions: []
+  isBoss: 0

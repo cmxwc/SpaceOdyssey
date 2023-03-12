@@ -7,16 +7,16 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Planet
 {
-    public string subjectName;
+    public string topicName;
     // Create a dictionary to map subjects to their subject ids
-    public static Dictionary<string, int> subjectIdMap;
+    public static Dictionary<string, int> topicIdMap;
     static Planet()
     {
-        subjectIdMap = new Dictionary<string, int>();
+        topicIdMap = new Dictionary<string, int>();
         // Add some key-value pairs to the dictionary
-        subjectIdMap.Add("Maths", 0);
-        subjectIdMap.Add("English", 1);
-        subjectIdMap.Add("Geography", 2);
+        topicIdMap.Add("1", 0);
+        topicIdMap.Add("2", 1);
+        topicIdMap.Add("3", 2);
     }
 
 }

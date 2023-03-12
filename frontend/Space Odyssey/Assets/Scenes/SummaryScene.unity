@@ -3884,8 +3884,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Learning objective 1 example: This is one of the learning objectives for
-    this subject and topic'
+  m_text: Learn about the classification of numbers based on number properties, and
+    find the highest common factor and lowest common multiple of numbers using prime
+    factorisation.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2c0d3322b2eb6e3478c18f7ddcfc66b3, type: 2}
   m_sharedMaterial: {fileID: -5750975373893279193, guid: 2c0d3322b2eb6e3478c18f7ddcfc66b3, type: 2}

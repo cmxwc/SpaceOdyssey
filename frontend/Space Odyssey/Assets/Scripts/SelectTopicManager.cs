@@ -21,6 +21,7 @@ public class SelectTopicManager : MonoBehaviour
     public void updateSelectedTopic()
     {
         topicLabel.text = "Topic " + selectedTopic.ToString();
+        topicImage.sprite = topicSprite[selectedTopic - 1];
     }
 
     public void prevTopic()

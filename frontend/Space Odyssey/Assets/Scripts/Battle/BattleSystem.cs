@@ -157,8 +157,9 @@ public class BattleSystem : MonoBehaviour
     {
         if (player == "enemy")
         {
-            int numQns = 3;
-            int damage = 100 / numQns;
+            // int numQns = 2;
+            // int damage = 100 / numQns;
+            int damage = 50;
 
             enemyHp -= damage;
             yield return enemyHud.UpdateHP(enemyHp, 100);

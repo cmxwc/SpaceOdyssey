@@ -50,6 +50,10 @@ public class SceneLoaderManager : MonoBehaviour
     {
         SceneManager.LoadScene("AchievementsScene");
     }
+    public static void LoadSelectGalaxyScene()
+    {
+        SceneManager.LoadScene("SelectGalaxyScene");
+    }
     public static void LoadSelectPlanetScene()
     {
         SceneManager.LoadScene("SelectPlanetScene");
