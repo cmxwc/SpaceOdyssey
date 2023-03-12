@@ -10,8 +10,9 @@ class database():
         else:
             self.deta = False
             self.folder = "data/"
-            # if env == "TEST":
-            #     self.folder = "data/test/"
+            if env == "TEST":
+                self.folder = "data/test/"
+                print("Running Test...")
             # print("Running NTU Server")
 
     def save_json(self, name, data):

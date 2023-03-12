@@ -2,12 +2,18 @@ from fastapi import FastAPI
 import uvicorn
 from base import database
 from classes import *
+import argparse
 
 # adding cors headers
 from fastapi.middleware.cors import CORSMiddleware
 
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('--db', type=str, default="Space_DB",
+                    help='select db')
+args = parser.parse_args()
 
-db = database('Space_DB')
+
+db = database(args.db)
 app = FastAPI()
 
 # adding cors urls
@@ -49,7 +55,7 @@ def register_student(data: User):
     db.save_json(authpath, data_to_add)
     db.save_json("student_info", {"username": username})
 
-    return "User successfully registered"
+    return "Successfully registered!"
 
 
 @app.post("/login_student", tags=['authentication'])
@@ -86,7 +92,7 @@ def register_teacher(data: User):
     }
     db.save_json(authpath, data_to_add)
 
-    return "Successfully registered!", data_to_add
+    return "Successfully registered!"
 
 
 @app.post("/login_teacher", tags=['authentication'])
@@ -99,7 +105,7 @@ def login_teacher(data: User):
     for i in data:
         if username in i['username']:
             if password == i['password']:
-                return "Successfully logged in!"
+                return "Successfully authenticated"
             else:
                 return "Wrong password, try again!"
 
@@ -298,5 +304,8 @@ async def get_highscore(username: str):
 if __name__ == "__main__":
     host = "0.0.0.0"
     port = 8000
+    print("="*10)
+    print(f"View Documentation at - http://localhost:{port}/docs")
+    print("="*10)
     uvicorn.run("main:app", host=host, port=port,
                 log_level="info", reload=True)
