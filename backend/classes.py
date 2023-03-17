@@ -12,19 +12,37 @@ class UserData(BaseModel):
     classNumber: int
     highestScore: int
     numOfGamesCompleted: int
-    levelsUnlocked: List[int]
     subjectsTaken: List[str]
     lastLoginDay: str
 
+class GameRecord(BaseModel):
+    gameId: Optional[int] = None
+    username: str
+    score: int
+    numberCorrect: int
+    weakestLearningObj: str
+    dateOfGame: str
+    completed: bool
+
+class QuestionBattleRecord(BaseModel):
+    username: str
+    questionSubject: str
+    questionId: int
+    gameId: Optional[int] = None
+    correct: bool
 
 class Question(BaseModel):
     questionId: int
     questionSubject: str
     questionTopic: int
+    questionDifficulty: int
     questionText: str
-    questionAnsIndex: int
-    questionAnsText: List[str]
-    questionLearningObj: int
+    questionAns: int
+    option1: str
+    option2: str
+    option3: str
+    option4: str
+    questionLearningObj: str
 
 class UserDataLogin(BaseModel):
     username: str

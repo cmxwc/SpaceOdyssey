@@ -200,10 +200,9 @@ public class LoginAndRegister : MonoBehaviour
 
     public void CreateNewStudentData()
     {
-        var levelsUnlockedList = new List<int> { 0, 1 };
         var subjectsTakenList = new List<string> { "Maths", "English" };
         var url = HttpManager.http_url + "add_userData";
-        student = new Student(usernameInput, 0, 0, 0, levelsUnlockedList, subjectsTakenList, DateTime.Now.ToString());
+        student = new Student(usernameInput, 0, 0, 0, subjectsTakenList, DateTime.Now.ToString());
         var response = HttpManager.Post(url, student); // post to backend studentdata
         Debug.Log("post " + response);
 

@@ -177,7 +177,7 @@ async def update_userData(data: UserData):
 
 
 @app.get("/get_userData", tags=['userData'])
-@app.post("/get_userData", tags=['userData'])
+# @app.post("/get_userData", tags=['userData'])
 async def get_userData(username: str):
     authpath = "userData"
     data = db.load_json(authpath)
@@ -252,6 +252,44 @@ async def get_question_by_id(subject: str, questionId: int, topic: int):
             return i
     return "No question with subject {}, topic {} and id {} found".format(subject, topic, questionId)
 
+######## GAME DATA REQUEST #######################################
+def add_id_record(data):
+    """
+    Add the game id for game records
+    """
+    authpath = "gameRecordData"
+    num_docs = len(list(db.load_json(authpath)))
+    data["gameId"] = num_docs + 1
+    return data
+
+@app.post("/add_gamerecord", tags=['game data'])
+async def add_gamerecord(data: GameRecord):
+    authpath = "gameRecordData"
+    data_to_add = data.dict()
+    data_to_add = add_id_record(data_to_add)
+    db.save_json(authpath, data_to_add)
+    return "New game record added!"
+
+@app.post("/get_gamerecord", tags=['game data'])
+async def get_gamerecord():
+    authpath="gameRecordData"
+    data = db.load_json(authpath)
+    return data
+
+@app.post("/add_question_battle_record", tags=['game data'])
+async def add_question_battle_record(data: QuestionBattleRecord):
+    authpath = "questionRecordData"
+    data_to_add = data.dict()
+    data_to_add = add_id_record(data_to_add)
+    db.save_json(authpath, data_to_add)
+    return "New question battle record added!"
+
+@app.post("/get_question_battle_record", tags=['game data'])
+async def get_question_battle_record():
+    authpath="questionRecordData"
+    data = db.load_json(authpath)
+    return data
+
 
 ######## SCORES REQUEST #######################################
 @app.post("/add_highscore", tags=['scores'])
@@ -276,7 +314,7 @@ async def get_highscore(subject: str):
     return data[0][subject]
 
 ######## ACHIEVEMENTS REQUEST #######################################
-@app.post("/add_achievements", tags=['userData'])
+@app.post("/add_achievements", tags=['scores'])
 async def update_userData(username: str, achievement: str):
     authpath = "achievementsData"
     data_to_add = {"username": username, achievement: True}
