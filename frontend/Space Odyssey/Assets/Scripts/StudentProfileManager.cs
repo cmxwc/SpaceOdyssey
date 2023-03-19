@@ -8,7 +8,6 @@ using TMPro;
 
 public class StudentProfileManager : MonoBehaviour
 {
-    private string http_url = "http://localhost:8000/";
     public string username;
     public TextMeshProUGUI usernameLabel;
     public TextMeshProUGUI classLabel;
@@ -43,7 +42,7 @@ public class StudentProfileManager : MonoBehaviour
     }
     public void displayUserData()
     {
-        var url = http_url + "get_userData?username=" + username;
+        var url = HttpManager.http_url + "get_userData?username=" + username;
         Student profileDetails = HttpManager.Get<Student>(url);  // Must specify the <TResultType> when calling the method
         usernameLabel.text = username;
         classLabel.text = profileDetails.classNumber.ToString();

@@ -3,16 +3,17 @@ import uvicorn
 from base import database
 from classes import *
 import argparse
+from deta import Deta
 
 # adding cors headers
 from fastapi.middleware.cors import CORSMiddleware
 
 parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('--db', type=str, default="Space_DB",
+parser.add_argument('--db', type=str, default="deta",
                     help='select db')
 args = parser.parse_args()
 
-
+deta = Deta()
 db = database(args.db)
 app = FastAPI()
 
@@ -20,6 +21,7 @@ app = FastAPI()
 origins = [
     'http://127.0.0.1:5501',
     'http://127.0.0.1:5500',
+    'http://localhost:54341/',
     'https://spaceodyssey-teacher-admin.netlify.app'
 ]
 # add middleware
@@ -53,7 +55,9 @@ def register_student(data: User):
         "password": password,
     }
     db.save_json(authpath, data_to_add)
-    db.save_json("student_info", {"username": username})
+    # users = deta.Base("auth_student")
+    # users.put(data_to_add)
+    # db.save_json("student_info", {"username": username})
 
     return "Successfully registered!"
 
@@ -295,6 +299,12 @@ async def get_question_battle_record():
 @app.post("/add_highscore", tags=['scores'])
 async def add_highscore(subject:str, data: HighScores):
     authpath = "highscoreData"
+    new = {
+        "English": [],
+        "Maths": [],
+        "Geography": []
+    }
+    db.save_json(authpath, new)
     data_to_add = data.dict()
     olddata = db.load_json(authpath)
     for idx, i in enumerate(olddata[0][subject]):

@@ -15,7 +15,8 @@ public class AchievementsManager : MonoBehaviour
     {
         username = "fellybelly";
         achievementDetails = GetUserAchievements();
-        CheckAchievementCompleted(achievementDetails);
+        if (achievementDetails != "No achievements yet")
+            CheckAchievementCompleted(achievementDetails);
     }
 
     public string GetUserAchievements()

@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
-using System;
-using System.Threading.Tasks;
+// using System;
+// using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System;
 
 public class HttpManager
 {
-    public static string http_url = "http://localhost:8000/";
+    // public static string http_url = "http://localhost:8000/";
+    // public static string http_url = "https://spacedb.deta.dev/";
+    public static string http_url = "https://space_backend-1-f3793365.deta.app/";
 
     public static TResultType Get<TResultType>(string url)
     {

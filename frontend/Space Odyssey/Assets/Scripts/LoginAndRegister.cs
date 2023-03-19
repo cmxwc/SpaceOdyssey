@@ -184,7 +184,7 @@ public class LoginAndRegister : MonoBehaviour
             response = response.Substring(1, response.Length - 2);
             MessageLabel.text = response;
 
-            if (response == "User successfully registered")
+            if (response == "Successfully registered!")
             {
                 SaveUsername();
                 CreateNewStudentData();

@@ -19,6 +19,7 @@ public class BattleSystem : MonoBehaviour
     public event Action<bool> OnBattleOver;
     public List<Question> questionList;
     public int currentQuestion;
+    public List<String> currentOptionsList;
     public int selectedOption;
     // public Question currentQuestion;
     int enemyHp = 100;
@@ -37,8 +38,6 @@ public class BattleSystem : MonoBehaviour
     }
     public void StartEnemyBattle(EnemyController enemy)
     {
-        // player = GetComponent<PlayerController>();
-        // enemy = GetComponent<EnemyController>();
         currentQuestion = 0;
         StartCoroutine(SetupBattle(enemy.Questions));
     }
@@ -46,11 +45,8 @@ public class BattleSystem : MonoBehaviour
     public IEnumerator SetupBattle(List<Question> questions = null)
     {
         DataManager.health = 100;
-        // questionList = getQuestionDataBySubjectTopic("English", 1);
-        // questionList = enemy.GetSelectedQuestions();
         questionList = questions;
         Debug.Log(questionList.Count);
-        // getQuestionDataBySubjectTopic(DataManager.selectedSubject, DataManager.selectedTopic);
 
         playerUnit.Setup();
         enemyUnit.Setup();
@@ -67,6 +63,10 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.EnemyQuestion;
         dialogBox.EnableQuestionBox(true, questionList[currentQuestion].questionText);
+        currentOptionsList.Add(questionList[currentQuestion].option1);
+        currentOptionsList.Add(questionList[currentQuestion].option2);
+        currentOptionsList.Add(questionList[currentQuestion].option3);
+        currentOptionsList.Add(questionList[currentQuestion].option4);
     }
 
     void PlayerAction()
@@ -142,7 +142,7 @@ public class BattleSystem : MonoBehaviour
     // Validate the answer submitted by user
     public bool ValidateAnswer(int selectedOption)
     {
-        if (selectedOption == questionList[currentQuestion].questionAnsIndex)
+        if (selectedOption == questionList[currentQuestion].questionAns)
         {
             return true;
         }
@@ -237,7 +237,8 @@ public class BattleSystem : MonoBehaviour
                 currentOption -= 2;
         }
 
-        dialogBox.UpdateOptionSelection(currentOption, questionList[currentQuestion].questionAnsText[currentOption]);
+        // string optionAttribute = "option" + currentOption.ToString();
+        dialogBox.UpdateOptionSelection(currentOption, currentOptionsList[currentOption]);
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
