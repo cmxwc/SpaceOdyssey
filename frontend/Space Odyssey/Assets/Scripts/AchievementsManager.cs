@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AchievementsManager : MonoBehaviour
 {
-    private string http_url = "http://localhost:8000/";
     public string username;
     private HttpManager http;
     private string achievementDetails;
@@ -13,7 +12,7 @@ public class AchievementsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        username = "fellybelly";
+        username = DataManager.username;
         achievementDetails = GetUserAchievements();
         if (achievementDetails != "No achievements yet")
             CheckAchievementCompleted(achievementDetails);
@@ -21,7 +20,7 @@ public class AchievementsManager : MonoBehaviour
 
     public string GetUserAchievements()
     {
-        var url = http_url + "get_achievements?username=" + username;
+        var url = HttpManager.http_url + "get_achievements?username=" + username;
         var achievementDetails = HttpManager.Task(url);
         Debug.Log(achievementDetails);
 

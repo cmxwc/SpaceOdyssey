@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 
 public class LeaderboardManager : MonoBehaviour
 {
-    private string http_url = "http://localhost:8000/";
     private SceneLoaderManager scene;
     private List<ScoreList> userList;
     int MaxScores = 5; // Number of scores to be shown on one page
@@ -36,7 +35,7 @@ public class LeaderboardManager : MonoBehaviour
     }
     public void GetScoreData()
     {
-        var url = http_url + "get_highscore?subject=" + subject;
+        var url = HttpManager.http_url + "get_highscore?subject=" + subject;
         var responseStr = HttpManager.Post(url, "");
         Debug.Log(responseStr);
         userList = JsonConvert.DeserializeObject<List<ScoreList>>(responseStr);
