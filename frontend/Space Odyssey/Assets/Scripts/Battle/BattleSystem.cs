@@ -22,11 +22,12 @@ public class BattleSystem : MonoBehaviour
     public List<String> currentOptionsList;
     public int selectedOption;
     // public Question currentQuestion;
-    int enemyHp = 100;
+    int enemyHp;
 
     int currentAction;
     int currentOption;
 
+    public QuestionBattleRecord questionBattleRecord;
     PlayerController player;
     EnemyController enemy;
 
@@ -48,6 +49,7 @@ public class BattleSystem : MonoBehaviour
         questionList = questions;
         Debug.Log(questionList.Count);
 
+        enemyHp = 100;
         playerUnit.Setup();
         enemyUnit.Setup();
         playerHud.SetData();
@@ -63,6 +65,7 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.EnemyQuestion;
         dialogBox.EnableQuestionBox(true, questionList[currentQuestion].questionText);
+        currentOptionsList.Clear();
         currentOptionsList.Add(questionList[currentQuestion].option1);
         currentOptionsList.Add(questionList[currentQuestion].option2);
         currentOptionsList.Add(questionList[currentQuestion].option3);
@@ -105,6 +108,11 @@ public class BattleSystem : MonoBehaviour
             playerUnit.PlayHitAnimation();
             yield return TakeDamage("player");
         }
+        //TODO CHANGE TO DATAMANGER AFTER TESTING
+        // questionBattleRecord = new QuestionBattleRecord(DataManager.username, DataManager.selectedSubject, questionList[currentQuestion].questionId, ValidateAnswer(currentOption));
+        questionBattleRecord = new QuestionBattleRecord("spaceman", "English", questionList[currentQuestion].questionId, ValidateAnswer(currentOption));
+        var url = HttpManager.http_url + "add_question_battle_record";
+        var response = HttpManager.Post(url, questionBattleRecord);
 
         yield return new WaitForSeconds(2f);
 
@@ -157,8 +165,6 @@ public class BattleSystem : MonoBehaviour
     {
         if (player == "enemy")
         {
-            // int numQns = 2;
-            // int damage = 100 / numQns;
             int damage = 50;
 
             enemyHp -= damage;
@@ -166,7 +172,7 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            int damage = 10;
+            int damage = 20;
             DataManager.health -= damage;
 
             yield return playerHud.UpdateHP(DataManager.health, DataManager.maxHp);

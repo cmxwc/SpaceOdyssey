@@ -298,10 +298,11 @@ async def get_question_battle_record():
 @app.post("/delete_question_bank", tags=['question'])
 async def delete_question_bank(subject: str):
     authpath = "questionData"
-    old_data = db.load_json(authpath)
+    users = deta.Base(authpath)
+    old_data = users.fetch().items
     for i in old_data:
         if i["questionSubject"] == subject:
-            db.delete_json(authpath, i["key"])
+            users.delete(i["key"])
 
     return "Question bank for subject [{}] deleted".format(subject)
 

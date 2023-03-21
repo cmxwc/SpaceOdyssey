@@ -10648,7 +10648,7 @@ MonoBehaviour:
   - {fileID: -608061816, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: -570179153, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: 1498643388, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
-  defaultDirection: 3
+  defaultDirection: 2
 --- !u!114 &813299049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10769,7 +10769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813299046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.87, y: -6.9, z: 0}
+  m_LocalPosition: {x: 14.5, y: -4.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11304,7 +11304,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868973012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.23, y: 1.96, z: 0}
+  m_LocalPosition: {x: 7.5, y: 1.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -28746,7 +28746,7 @@ MonoBehaviour:
   - {fileID: -608061816, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: -570179153, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: 1498643388, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
-  defaultDirection: 1
+  defaultDirection: 3
 --- !u!114 &1324202514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28867,7 +28867,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324202511}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.19, y: 14.3, z: 0}
+  m_LocalPosition: {x: 4.5, y: 14.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36146,7 +36146,7 @@ MonoBehaviour:
   - {fileID: -608061816, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: -570179153, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: 1498643388, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
-  defaultDirection: 3
+  defaultDirection: 1
 --- !u!114 &1747332872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36267,7 +36267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1747332869}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.85, y: 10.810001, z: 0}
+  m_LocalPosition: {x: 14.5, y: 11.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36609,7 +36609,7 @@ GameObject:
   - component: {fileID: 1847138053}
   - component: {fileID: 1847138052}
   m_Layer: 9
-  m_Name: Enemy5 (1)
+  m_Name: Enemy Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38841,8 +38841,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2142395378}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.2, y: 0.18, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 14.5, y: 0.8, z: 0}
+  m_LocalScale: {x: 1.1584, y: 1.1584, z: 1.1584}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2134905875}

@@ -13,7 +13,7 @@ public class DataManager : MonoBehaviour
     public static string selectedSubject;
     public static int selectedTopic;
     public static int level = 1;
-    public static int maxHp = 100 + level * 50;
+    public static int maxHp = 100;
     public static int health;
 
 

@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour
     {
         // GameDataManager.questionList = QuestionManager.getQuestionDataBySubjectTopic(DataManager.selectedSubject, DataManager.selectedTopic);
         GameDataManager.questionList = QuestionManager.getQuestionDataBySubjectTopic("English", 1);
-        Debug.Log("Questions have been retrived" + GameDataManager.questionList[0].questionText);
+        Debug.Log("Questions have been retrived");
         playerController.OnEncountered += StartBattle;
         battleSystem.OnBattleOver += EndBattle;
 
