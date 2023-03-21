@@ -37,8 +37,8 @@ class database():
         if self.deta:
             users = self.deta.Base(name)
             fetch_res = users.fetch().items
-            for i in fetch_res:
-                del i['key']
+            # for i in fetch_res:
+            #     del i['key']
             return fetch_res
         else:
             try:
@@ -47,3 +47,14 @@ class database():
             except:
                 data = []
             return data
+    def delete_json(self, name, key):
+        if self.deta:
+            users = self.deta.Base(name)
+            users.delete(key)
+        else:
+            print("nvm")
+    def put_many_json(self, name, data):
+        if self.deta:
+            users = self.deta.Base(name)
+            users.put_many(data)
+

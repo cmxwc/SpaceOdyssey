@@ -4,6 +4,7 @@ from base import database
 from classes import *
 import argparse
 from deta import Deta
+from typing import Optional, List
 
 # adding cors headers
 from fastapi.middleware.cors import CORSMiddleware
@@ -293,6 +294,26 @@ async def get_question_battle_record():
     authpath="questionRecordData"
     data = db.load_json(authpath)
     return data
+
+@app.post("/delete_question_bank", tags=['question'])
+async def delete_question_bank(subject: str):
+    authpath = "questionData"
+    old_data = db.load_json(authpath)
+    for i in old_data:
+        if i["questionSubject"] == subject:
+            db.delete_json(authpath, i["key"])
+
+    return "Question bank for subject [{}] deleted".format(subject)
+
+# @app.post("/update_question_bank", tags=['question'])
+# async def update_question_bank(data: List[Question]):
+#     authpath = "questionData"
+#     users = deta.Base(authpath)
+#     for i in data:
+#         i.dict()
+#         users.put(i)
+
+#     return "Question bank for subject updated"
 
 
 ######## SCORES REQUEST #######################################

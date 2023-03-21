@@ -252,6 +252,17 @@ async def get_question_by_id(subject: str, questionId: int, topic: int):
             return i
     return "No question with subject {}, topic {} and id {} found".format(subject, topic, questionId)
 
+
+@app.post("/update_question_subject_bank", tags=['question'])
+async def update_question_subject_bank(subject: str):
+    authpath = "questionData"
+    old_data = db.load_json(authpath)
+    for i in old_data:
+        if i["questionSubject"] == subject:
+            db.delete_json(authpath, i["key"])
+    return "Question bank for subject [{}] updated".format(subject)
+
+
 ######## GAME DATA REQUEST #######################################
 def add_id_record(data):
     """

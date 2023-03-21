@@ -47,3 +47,9 @@ class database():
             except:
                 data = []
             return data
+    def delete_json(self, name, key):
+        if self.deta:
+            users = self.deta.Base(name)
+            users.delete(key)
+        else:
+            print("nvm")
