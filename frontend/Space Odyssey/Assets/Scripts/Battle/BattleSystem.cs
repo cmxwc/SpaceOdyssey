@@ -23,11 +23,13 @@ public class BattleSystem : MonoBehaviour
     public int selectedOption;
     // public Question currentQuestion;
     int enemyHp;
+    bool IsBoss;
 
     int currentAction;
     int currentOption;
 
     public QuestionBattleRecord questionBattleRecord;
+    public GameRecord gameRecord;
     PlayerController player;
     EnemyController enemy;
 
@@ -40,12 +42,13 @@ public class BattleSystem : MonoBehaviour
     public void StartEnemyBattle(EnemyController enemy)
     {
         currentQuestion = 0;
+        IsBoss = enemy.IsBoss;
+        Debug.Log("ARE YOU A BOSS: " + IsBoss);
         StartCoroutine(SetupBattle(enemy.Questions));
     }
 
     public IEnumerator SetupBattle(List<Question> questions = null)
     {
-        DataManager.health = 100;
         questionList = questions;
         Debug.Log(questionList.Count);
 
@@ -96,6 +99,7 @@ public class BattleSystem : MonoBehaviour
 
         if (ValidateAnswer(currentOption))
         {
+            GameController.Instance.UpdateAfterEachQuestion(1, 100 * questionList[currentQuestion].questionDifficulty);
             yield return dialogBox.TypeDialog("Your answer is correct! Enemy has taken damage!");
             playerUnit.PlayAttackAnimation();
             enemyUnit.PlayHitAnimation();
@@ -103,14 +107,15 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
+            GameController.Instance.UpdateAfterEachQuestion(0, 100 * questionList[currentQuestion].questionDifficulty, questionList[currentQuestion].questionLearningObj);
             yield return dialogBox.TypeDialog("Your answer is incorrect! You have taken damage!");
             enemyUnit.PlayAttackAnimation();
             playerUnit.PlayHitAnimation();
             yield return TakeDamage("player");
         }
         //TODO CHANGE TO DATAMANGER AFTER TESTING
-        // questionBattleRecord = new QuestionBattleRecord(DataManager.username, DataManager.selectedSubject, questionList[currentQuestion].questionId, ValidateAnswer(currentOption));
-        questionBattleRecord = new QuestionBattleRecord("spaceman", "English", questionList[currentQuestion].questionId, ValidateAnswer(currentOption));
+        questionBattleRecord = new QuestionBattleRecord(DataManager.username, DataManager.selectedSubject, questionList[currentQuestion].questionId, ValidateAnswer(currentOption));
+        // questionBattleRecord = new QuestionBattleRecord("spaceman", "English", questionList[currentQuestion].questionId, ValidateAnswer(currentOption));
         var url = HttpManager.http_url + "add_question_battle_record";
         var response = HttpManager.Post(url, questionBattleRecord);
 
@@ -121,21 +126,37 @@ public class BattleSystem : MonoBehaviour
             yield return dialogBox.TypeDialog("Enemy has fainted!");
             // enemyUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
+            if (IsBoss)
+            {
+                // POST GAME RESULTS ---- GAME COMPLETED
+                GameController.Instance.PostAfterGame(true);
+            }
             OnBattleOver(true);
+
         }
         else if (DataManager.health <= 0)
         {
+            // PLAYER LOST THE GAME
             yield return dialogBox.TypeDialog("Your health has reached zero! You have fainted!");
             // playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
+            // POST GAME RESULTS ---- GAME NOT COMPLETED BC DIED
+            GameController.Instance.PostAfterGame(false);
             OnBattleOver(true);
         }
+
         else if (currentQuestion == questionList.Count - 1)
         {
             yield return dialogBox.TypeDialog("You have completed the battle! The battle is ending now!");
             // enemyUnit.PlayFaintAnimation();
             // playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
+
+            if (IsBoss)
+            {
+                // POST GAME RESULTS ---- GAME COMPLETED
+                GameController.Instance.PostAfterGame(true);
+            }
             OnBattleOver(true);
         }
         else if (enemyHp > 0 && DataManager.health > 0)
@@ -255,4 +276,6 @@ public class BattleSystem : MonoBehaviour
             StartCoroutine(PerformPlayerOption());
         }
     }
+
+
 }

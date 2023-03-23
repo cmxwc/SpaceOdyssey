@@ -28105,6 +28105,8 @@ MonoBehaviour:
   playerController: {fileID: 1980046866}
   battleSystem: {fileID: 1900447699}
   worldCamera: {fileID: 519420031}
+  allQuestionList: []
+  gameDataManager: {fileID: 0}
 --- !u!4 &994114149
 Transform:
   m_ObjectHideFlags: 0
@@ -36146,7 +36148,7 @@ MonoBehaviour:
   - {fileID: -608061816, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: -570179153, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
   - {fileID: 1498643388, guid: aa04ac76225aa0d41bdfe79360d70b00, type: 3}
-  defaultDirection: 1
+  defaultDirection: 3
 --- !u!114 &1747332872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36267,7 +36269,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1747332869}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.5, y: 11.8, z: 0}
+  m_LocalPosition: {x: 10.5, y: 9.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -257,6 +257,17 @@ async def get_question_by_id(subject: str, questionId: int, topic: int):
             return i
     return "No question with subject {}, topic {} and id {} found".format(subject, topic, questionId)
 
+@app.post("/delete_question_bank", tags=['question'])
+async def delete_question_bank(subject: str):
+    authpath = "questionData"
+    users = deta.Base(authpath)
+    old_data = users.fetch().items
+    for i in old_data:
+        if i["questionSubject"] == subject:
+            users.delete(i["key"])
+
+    return "Question bank for subject [{}] deleted".format(subject)
+
 ######## GAME DATA REQUEST #######################################
 def add_id_record(data):
     """
@@ -281,6 +292,17 @@ async def get_gamerecord():
     data = db.load_json(authpath)
     return data
 
+@app.get("/get_gamerecord_user", tags=['game data'])
+async def get_gamerecord(username: str):
+    authpath="gameRecordData"
+    data = db.load_json(authpath)
+    result = []
+    for i in data:
+        if i["username"] == username:
+            result.append(i)
+    result = sorted(result, key=lambda x: x["gameId"], reverse=True)
+    return result
+
 @app.post("/add_question_battle_record", tags=['game data'])
 async def add_question_battle_record(data: QuestionBattleRecord):
     authpath = "questionRecordData"
@@ -295,16 +317,7 @@ async def get_question_battle_record():
     data = db.load_json(authpath)
     return data
 
-@app.post("/delete_question_bank", tags=['question'])
-async def delete_question_bank(subject: str):
-    authpath = "questionData"
-    users = deta.Base(authpath)
-    old_data = users.fetch().items
-    for i in old_data:
-        if i["questionSubject"] == subject:
-            users.delete(i["key"])
 
-    return "Question bank for subject [{}] deleted".format(subject)
 
 # @app.post("/update_question_bank", tags=['question'])
 # async def update_question_bank(data: List[Question]):
@@ -319,31 +332,31 @@ async def delete_question_bank(subject: str):
 
 ######## SCORES REQUEST #######################################
 @app.post("/add_highscore", tags=['scores'])
-async def add_highscore(subject:str, data: HighScores):
+async def add_highscore(data: HighScores):
     authpath = "highscoreData"
-    new = {
-        "English": [],
-        "Maths": [],
-        "Geography": []
-    }
-    db.save_json(authpath, new)
     data_to_add = data.dict()
-    olddata = db.load_json(authpath)
-    for idx, i in enumerate(olddata[0][subject]):
-        if i['username'] == data.username:
-            olddata[0][subject][idx]['score'] = data.score
-            db.update_json(authpath, olddata)
-            return "Highscore has been updated for {}".format(subject)
-    olddata[0][subject].append(data_to_add)
-    db.update_json(authpath, olddata)
-    return "New highscore successfully added for {}".format(subject)
+    users = deta.Base(authpath)
+    old_data = users.fetch().items
+    for i in old_data:
+        if i["username"] == data.username and i["subject"] == data.subject:
+            if i["score"] < data.score:
+                users.delete(i["key"])
+            else:
+                return "No new highscore"
+    users.put(data_to_add)
+    return "New highscore successfully added"
+    
 
 
 @app.post("/get_highscore", tags=['scores'])
 async def get_highscore(subject: str):
     authpath="highscoreData"
+    result = []
     data = db.load_json(authpath)
-    return data[0][subject]
+    for i in data:
+        if i["subject"] == subject:
+            result.append(i)
+    return result
 
 ######## ACHIEVEMENTS REQUEST #######################################
 @app.post("/add_achievements", tags=['scores'])

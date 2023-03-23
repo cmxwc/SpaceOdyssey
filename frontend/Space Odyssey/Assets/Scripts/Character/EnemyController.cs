@@ -91,13 +91,18 @@ public class EnemyController : MonoBehaviour
 
     public List<Question> GetSelectedQuestions()
     {
-        List<Question> selectedQuestions = QuestionListIndex.Select(i => GameDataManager.questionList[i]).ToList();
+        var questionList = GameController.Instance.GetQuestions();
+        List<Question> selectedQuestions = QuestionListIndex.Select(i => questionList[i]).ToList();
         return selectedQuestions;
     }
 
     public List<Question> Questions
     {
         get => GetSelectedQuestions();
+    }
+    public bool IsBoss
+    {
+        get => isBoss;
     }
 
     // public string Name

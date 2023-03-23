@@ -23,6 +23,7 @@ class GameRecord(BaseModel):
     weakestLearningObj: str
     dateOfGame: str
     completed: bool
+    timeTaken: float
 
 class QuestionBattleRecord(BaseModel):
     username: str
@@ -50,6 +51,7 @@ class UserDataLogin(BaseModel):
 
 class HighScores(BaseModel):
     username: str
+    subject: str
     score: int
 
 class Achievements(BaseModel):

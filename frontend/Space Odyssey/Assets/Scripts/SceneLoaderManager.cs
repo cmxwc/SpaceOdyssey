@@ -66,6 +66,10 @@ public class SceneLoaderManager : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
+    public static void LoadSummaryScene()
+    {
+        SceneManager.LoadScene("SummaryScene");
+    }
 
 
 }

@@ -13,7 +13,7 @@ public class LeaderboardManager : MonoBehaviour
     int MaxScores = 5; // Number of scores to be shown on one page
     public RowUI rowUi;
     private int currLeaderboardIndex = 0;
-    private string subject = "english";
+    private string subject = "English";
 
     void Start()
     {
@@ -23,14 +23,16 @@ public class LeaderboardManager : MonoBehaviour
 
     public class ScoreList
     {
-        public ScoreList(string username, int score)
+        public ScoreList(string username, int score, string subject)
         {
             this.username = username;
             this.score = score;
+            this.subject = subject;
         }
 
         public string username { get; set; }
         public int score { get; set; }
+        public string subject { get; set; }
 
     }
     public void GetScoreData()

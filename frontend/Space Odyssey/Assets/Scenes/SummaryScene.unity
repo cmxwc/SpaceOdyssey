@@ -1609,31 +1609,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 541791755}
-  - component: {fileID: 541791754}
+  - component: {fileID: 541791756}
   m_Layer: 0
-  m_Name: AchievementsManager
+  m_Name: SummaryManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &541791754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 541791753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b31f0ae9b3d52bd48a668dc5a9f000be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  username: fellybelly
-  completedAchievement:
-  - {fileID: 916399923}
-  - {fileID: 1719813891}
-  - {fileID: 207920104}
 --- !u!4 &541791755
 Transform:
   m_ObjectHideFlags: 0
@@ -1649,6 +1632,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &541791756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541791753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56236cd9cf00814c8dd9f832d23744e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  username: spaceman
+  scoreText: {fileID: 274837350}
+  accuracyText: {fileID: 393320774}
+  timeTakenText: {fileID: 52751246}
+  weakestLearningObjText: {fileID: 1259952352}
+  newAchievement: {fileID: 2025072867}
+  Star1: {fileID: 244266743}
+  Star2: {fileID: 1703161585}
+  Star3: {fileID: 211217330}
 --- !u!1 &542125426
 GameObject:
   m_ObjectHideFlags: 0
