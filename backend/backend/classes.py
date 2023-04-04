@@ -20,6 +20,8 @@ class GameRecord(BaseModel):
     username: str
     score: int
     numberCorrect: int
+    questionSubject: str
+    questionTopic: int
     weakestLearningObj: str
     dateOfGame: str
     completed: bool

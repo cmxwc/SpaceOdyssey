@@ -106,7 +106,7 @@ public class GameController : MonoBehaviour
     {
         DateTime endTime = DateTime.Now;
         double duration = Math.Round((endTime - startTime).TotalMinutes, 2);
-        GameRecord gameRecord = new GameRecord(DataManager.username, gameDataManager.score, gameDataManager.numberCorrect, gameDataManager.getWeakestLearningObj(), DateTime.Now.ToString(), completed, duration);
+        GameRecord gameRecord = new GameRecord(DataManager.username, gameDataManager.score, gameDataManager.numberCorrect, DataManager.selectedSubject, DataManager.selectedTopic, gameDataManager.getWeakestLearningObj(), DateTime.Now.ToString(), completed, duration);
         var url = HttpManager.http_url + "add_gamerecord";
         var response = HttpManager.Post(url, gameRecord);
         Debug.Log(response);

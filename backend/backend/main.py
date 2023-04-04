@@ -317,6 +317,17 @@ async def get_question_battle_record():
     data = db.load_json(authpath)
     return data
 
+# @app.post("/get_avg_subject", tags=['game data'])
+# async def get_stats():
+#     authpath1="questionRecordData"
+#     authpath2="gameRecordData"
+#     qns = deta.Base(authpath1)
+#     games = deta.Base(authpath2)
+#     for i in games:
+#         for j in qns:
+#         i["subject"] = qns.get(i["gameId"])
+#     return data
+
 
 
 # @app.post("/update_question_bank", tags=['question'])
