@@ -48,6 +48,14 @@ public class SelectTopicManager : MonoBehaviour
         DataManager.selectedTopic = selectedTopic;
         Debug.Log("Selected Topic " + DataManager.selectedTopic.ToString());
         DataManager.health = 100;
-        SceneLoaderManager.LoadGameScene();
+
+        // Initialise game data
+        GameDataManager.numberCorrectGame = 0;
+        GameDataManager.numberCorrectLevel = 0;
+        GameDataManager.score = 0;
+        GameDataManager.weakestLearningObjCount = new Dictionary<string, int>();
+
+        // Load Difficulty level 1 scene
+        SceneLoaderManager.LoadGameScene1();
     }
 }

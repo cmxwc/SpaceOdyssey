@@ -62,9 +62,17 @@ public class SceneLoaderManager : MonoBehaviour
     {
         SceneManager.LoadScene("SelectTopicScene");
     }
-    public static void LoadGameScene()
+    public static void LoadGameScene1()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("GameScene 1");
+    }
+    public static void LoadGameScene2()
+    {
+        SceneManager.LoadScene("GameScene 2");
+    }
+    public static void LoadGameScene3()
+    {
+        SceneManager.LoadScene("GameScene 3");
     }
     public static void LoadSummaryScene()
     {

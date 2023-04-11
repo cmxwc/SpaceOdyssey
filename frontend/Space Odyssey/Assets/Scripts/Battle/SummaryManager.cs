@@ -22,36 +22,43 @@ public class SummaryManager : MonoBehaviour
 
     void Start()
     {
-        // var url = HttpManager.http_url + "get_gamerecord_user?username=" + DataManager.username;
-        var url = HttpManager.http_url + "get_gamerecord_user?username=" + "spaceman";
-        List<GameRecord> response = HttpManager.Get<List<GameRecord>>(url);
-        result = response[0];
+        PostAfterGame();
         displaySummary();
 
-        if (result.completed == true)
+        if (GameDataManager.completed == true)
         {
             postToLeaderboard();
         }
     }
 
-    public void displaySummary()
+    public void PostAfterGame()
     {
-        getNumberStars(result.numberCorrect);
-        scoreText.text = result.score.ToString();
-        double accuracy = Math.Round((double)result.numberCorrect / 12, 2) * 100;
-        accuracyText.text = string.Format("{0}/12 ({1}%)", result.numberCorrect.ToString(), accuracy.ToString());
-        timeTakenText.text = result.timeTaken.ToString() + " mins";
-        weakestLearningObjText.text = result.weakestLearningObj;
+        DateTime endTime = DateTime.Now;
+        GameDataManager.duration = Math.Round((endTime - GameDataManager.startTime).TotalMinutes, 2);
+        GameRecord gameRecord = new GameRecord(DataManager.username, GameDataManager.score, GameDataManager.numberCorrectGame, DataManager.selectedSubject, DataManager.selectedTopic, GameDataManager.getWeakestLearningObj(), DateTime.Now.ToString(), GameDataManager.completed, GameDataManager.duration);
+        var url = HttpManager.http_url + "add_gamerecord";
+        var response = HttpManager.Post(url, gameRecord);
+        Debug.Log(response);
     }
 
-    public void getNumberStars(int numberCorrect)
+    public void displaySummary()
     {
-        if (numberCorrect <= 5)
+        getNumberStars(GameDataManager.numberCorrectGame);
+        scoreText.text = GameDataManager.score.ToString();
+        double accuracy = Math.Round((double)GameDataManager.numberCorrectGame / (12 * 3), 2) * 100;
+        accuracyText.text = string.Format("{0}/12 ({1}%)", GameDataManager.numberCorrectGame.ToString(), accuracy.ToString());
+        timeTakenText.text = GameDataManager.duration.ToString() + " mins";
+        weakestLearningObjText.text = GameDataManager.getWeakestLearningObj();
+    }
+
+    private void getNumberStars(int numberCorrect)
+    {
+        if (numberCorrect <= 5 * 3)
         {
             Star2.SetActive(true);
             Star3.SetActive(true);
         }
-        else if (numberCorrect <= 9)
+        else if (numberCorrect <= 9 * 3)
         {
             Star3.SetActive(true);
         }
@@ -60,7 +67,7 @@ public class SummaryManager : MonoBehaviour
     public void postToLeaderboard()
     {
         var url = HttpManager.http_url + "add_highscore";
-        LeaderboardManager.ScoreList scoreList = new LeaderboardManager.ScoreList(DataManager.username, result.score, DataManager.selectedSubject);
+        LeaderboardManager.ScoreList scoreList = new LeaderboardManager.ScoreList(DataManager.username, GameDataManager.score, DataManager.selectedSubject);
         var response = HttpManager.Post(url, scoreList);
     }
 

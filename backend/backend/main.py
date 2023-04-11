@@ -234,12 +234,26 @@ async def get_question_by_id(subject: str):
         return result
 
 @app.get("/get_question_by_subject_topic", tags=['question'])
-async def get_question_by_id(subject: str, topic: int):
+async def get_question_by_subject_topic(subject: str, topic: int):
     authpath = "questionData"
     data = db.load_json(authpath)
     result = []
     for i in data:
         if i['questionSubject'] == subject and i['questionTopic'] == topic:
+            result.append(i)
+            
+    if result == []:
+        return "No question with subject {} and topic {} found".format(subject, topic)
+    else:
+        return result
+    
+@app.get("/get_question_by_subject_topic_difficulty", tags=['question'])
+async def get_question_by_subject_topic_difficulty(subject: str, topic: int, difficulty: int):
+    authpath = "questionData"
+    data = db.load_json(authpath)
+    result = []
+    for i in data:
+        if i['questionSubject'] == subject and i['questionTopic'] == topic and i['questionDifficulty'] == difficulty:
             result.append(i)
             
     if result == []:

@@ -114,6 +114,7 @@ public class BattleSystem : MonoBehaviour
             yield return TakeDamage("player");
         }
         //TODO CHANGE TO DATAMANGER AFTER TESTING
+        // Update single question battle record
         questionBattleRecord = new QuestionBattleRecord(DataManager.username, DataManager.selectedSubject, questionList[currentQuestion].questionId, ValidateAnswer(currentOption));
         // questionBattleRecord = new QuestionBattleRecord("spaceman", "English", questionList[currentQuestion].questionId, ValidateAnswer(currentOption));
         var url = HttpManager.http_url + "add_question_battle_record";
@@ -128,8 +129,9 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(2f);
             if (IsBoss)
             {
-                // POST GAME RESULTS ---- GAME COMPLETED
-                GameController.Instance.PostAfterGame(true);
+                // POST GAME RESULTS ---- GAME LEVEL COMPLETED
+                GameDataManager.completed = true;
+                GameController.Instance.HandleLevelComplete(false);
             }
             OnBattleOver(true);
 
@@ -141,7 +143,8 @@ public class BattleSystem : MonoBehaviour
             // playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
             // POST GAME RESULTS ---- GAME NOT COMPLETED BC DIED
-            GameController.Instance.PostAfterGame(false);
+            GameDataManager.completed = false;
+            GameController.Instance.HandleLevelComplete(true);
             OnBattleOver(true);
         }
 
@@ -154,8 +157,9 @@ public class BattleSystem : MonoBehaviour
 
             if (IsBoss)
             {
-                // POST GAME RESULTS ---- GAME COMPLETED
-                GameController.Instance.PostAfterGame(true);
+                // POST GAME RESULTS ---- GAME LEVEL COMPLETED
+                GameDataManager.completed = false;
+                GameController.Instance.HandleLevelComplete(false);
             }
             OnBattleOver(true);
         }

@@ -10,14 +10,17 @@ using System.Linq;
 public class GameDataManager : MonoBehaviour
 {
     //public Student student;
-    public List<Question> questionList;
-    public int numberCorrect = 0;
-    public int score = 0;
-    public Dictionary<string, int> weakestLearningObjCount = new Dictionary<string, int>();
-    public string dateOfGame;
-    public bool completed;
+    public static List<Question> questionList;
+    public static int numberCorrectLevel;
+    public static int numberCorrectGame;
+    public static int score;
+    public static Dictionary<string, int> weakestLearningObjCount = new Dictionary<string, int>();
+    public static string dateOfGame;
+    public static bool completed;
+    public static DateTime startTime;
+    public static double duration;
 
-    public void AddString(Dictionary<string, int> stringCounts, string str)
+    public static void AddString(Dictionary<string, int> stringCounts, string str)
     {
         if (str != "")
         {
@@ -34,12 +37,12 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
-    public void updateWeakestLearningObjCount(string weakestLearningObj)
+    public static void updateWeakestLearningObjCount(string weakestLearningObj)
     {
         AddString(weakestLearningObjCount, weakestLearningObj);
     }
 
-    public string getWeakestLearningObj()
+    public static string getWeakestLearningObj()
     {
         if (weakestLearningObjCount.Count != 0)
         {
