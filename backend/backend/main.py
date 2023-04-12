@@ -272,15 +272,15 @@ async def get_question_by_id(subject: str, questionId: int, topic: int):
     return "No question with subject {}, topic {} and id {} found".format(subject, topic, questionId)
 
 @app.post("/delete_question_bank", tags=['question'])
-async def delete_question_bank(subject: str):
+async def delete_question_bank(subject: str, year: int):
     authpath = "questionData"
     users = deta.Base(authpath)
     old_data = users.fetch().items
     for i in old_data:
-        if i["questionSubject"] == subject:
+        if i["questionSubject"] == subject and i["year"] == year:
             users.delete(i["key"])
 
-    return "Question bank for subject [{}] deleted".format(subject)
+    return "Question bank for subject [{}], year {} deleted".format(subject, year)
 
 ######## GAME DATA REQUEST #######################################
 def add_id_record(data):

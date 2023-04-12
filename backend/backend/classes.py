@@ -37,6 +37,7 @@ class QuestionBattleRecord(BaseModel):
 class Question(BaseModel):
     questionId: int
     questionSubject: str
+    year: int
     questionTopic: int
     questionDifficulty: int
     questionText: str
