@@ -7,10 +7,11 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Question
 {
-    public Question(int questionId, string questionSubject, int questionTopic, int questionDifficulty, string questionText, int questionAns, string option1, string option2, string option3, string option4, string questionLearningObj)
+    public Question(int questionId, string questionSubject, int year, int questionTopic, int questionDifficulty, string questionText, int questionAns, string option1, string option2, string option3, string option4, string questionLearningObj)
     {
         this.questionId = questionId;
         this.questionSubject = questionSubject;
+        this.year = year;
         this.questionTopic = questionTopic;
         this.questionDifficulty = questionDifficulty;
         this.questionText = questionText;
@@ -24,6 +25,7 @@ public class Question
 
     public int questionId { get; set; }
     public string questionSubject { get; set; }
+    public int year { get; set; }
     public int questionTopic { get; set; }
     public int questionDifficulty { get; set; }
     public string questionText { get; set; }

@@ -12,7 +12,9 @@ public class SelectGalaxyManager : MonoBehaviour
     public Image galaxyImage;
     public Sprite[] galaxySprite;
     private int selectedGalaxy = 0;
+    private int selectedYear = 1;
     public TextMeshProUGUI galaxyLabel;
+    public TextMeshProUGUI yearLabel;
 
     void Start()
     {
@@ -53,10 +55,35 @@ public class SelectGalaxyManager : MonoBehaviour
         updateSelectedGalaxy();
     }
 
+    public void updateSelectedYear()
+    {
+        yearLabel.text = "YEAR " + selectedYear;
+    }
+    public void prevYear()
+    {
+        selectedYear -= 1;
+        if (selectedYear < 1)
+        {
+            selectedYear = 1;
+        }
+        updateSelectedYear();
+    }
+    public void nextYear()
+    {
+        selectedYear += 1;
+        if (selectedYear >= 4)
+        {
+            selectedYear = 4;
+        }
+        updateSelectedYear();
+    }
+
     public void confirmSelectedGalaxy()
     {
         DataManager.selectedSubject = subjectsTaken[selectedGalaxy];
+        DataManager.year = selectedYear;
         Debug.Log("Selected Galaxy " + DataManager.selectedSubject);
+        Debug.Log("Selected Year " + DataManager.year);
         SceneLoaderManager.LoadSelectPlanetScene();
     }
 }

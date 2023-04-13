@@ -14,9 +14,9 @@ public class QuestionManager : MonoBehaviour
         return HttpManager.Get<List<Question>>(url);
     }
 
-    public static List<Question> getQuestionDataBySubjectTopicDifficulty(string subject, int topic, int difficulty)
+    public static List<Question> getQuestionDataBySubjectTopicDifficulty(string subject, int topic, int difficulty, int year)
     {
-        var url = HttpManager.http_url + "get_question_by_subject_topic_difficulty?subject=" + subject + "&topic=" + topic + "&difficulty=" + difficulty;
+        var url = HttpManager.http_url + "get_question_by_subject_topic_difficulty?subject=" + subject + "&topic=" + topic + "&difficulty=" + difficulty + "&year=" + year;
         return HttpManager.Get<List<Question>>(url);
     }
 

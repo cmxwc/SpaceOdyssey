@@ -15,6 +15,7 @@ public class DataManager : MonoBehaviour
     public static int level = 1;
     public static int maxHp = 100;
     public static int health;
+    public static int year;
 
 
     // Start is called before the first frame update

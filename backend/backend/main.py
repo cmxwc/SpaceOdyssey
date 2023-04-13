@@ -4,7 +4,7 @@ from base import database
 from classes import *
 import argparse
 from deta import Deta
-from typing import Optional, List
+from typing import Optional, List, Any
 
 # adding cors headers
 from fastapi.middleware.cors import CORSMiddleware
@@ -48,7 +48,7 @@ def register_student(data: User):
 
     data = db.load_json(authpath)
     for i in data:
-        if username in i['username']:
+        if username == i['username']:
             return "Username already exists!"
 
     data_to_add = {
@@ -71,7 +71,7 @@ def login_student(data: User):
 
     data = db.load_json(authpath)
     for i in data:
-        if username in i['username']:
+        if username == i['username']:
             if password == i['password']:
                 return "Successfully authenticated"
             else:
@@ -88,7 +88,7 @@ def register_teacher(data: User):
 
     data = db.load_json(authpath)
     for i in data:
-        if username in i['username']:
+        if username == i['username']:
             return "Username already exists!"
 
     data_to_add = {
@@ -108,7 +108,7 @@ def login_teacher(data: User):
 
     data = db.load_json(authpath)
     for i in data:
-        if username in i['username']:
+        if username == i['username']:
             if password == i['password']:
                 return "Successfully authenticated"
             else:
@@ -154,32 +154,53 @@ async def add_userData(data: UserData):
     return "UserData successfully registered"
 
 
-@app.post("/update_userData_login", tags=['userData'])
-async def update_userData_login(data: UserDataLogin):
+@app.post("/update_userData_key", tags=['userData'])
+async def update_userData_key(username: str, key: str, value: Any):
+    """
+    Updates a single field in an item in the userData schema
+    """
     authpath = "userData"
-    data_to_add = data.dict()
-    olddata = db.load_json(authpath)
-    for idx, i in enumerate(olddata):
-        if i['username'] == data.username:
-            olddata[idx]["lastLoginDay"] = data_to_add["lastLoginDay"]
-
-            db.update_json(authpath, olddata)
-            return "UserData successfully updated"
-    return "UserData Failed to Update - Username Not Found"
+    users = deta.Base(authpath)
+    old_data = users.fetch().items
+    found = False
+    for i in old_data:
+        if i['username'] == username:
+            key_id = i['key']
+            found = True
+            break
+    if not found:
+        return "UserData Failed to Update - Username Not Found"
+    item = users.get(key_id)
+    field_type = type(item[key])
+    if field_type == type(value):
+        pass  # no need to convert, they already have the same type
+    elif isinstance(item[key], int):
+        value = int(value)
+    elif isinstance(item[key], float):
+        value = float(value)
+    elif isinstance(item[key], str):
+        value = str(value)
+    else:
+        raise TypeError("Cannot convert types")
+    item[key] = value
+    users.put(item)
+    return "UserData successfully updated" 
 
 @app.post("/update_userData", tags=['userData'])
 async def update_userData(data: UserData):
     authpath = "userData"
-    data_to_add = data.dict()
-    olddata = db.load_json(authpath)
-    for idx, i in enumerate(olddata):
+    users = deta.Base(authpath)
+    old_data = users.fetch().items
+    found = False
+    for i in old_data:
         if i['username'] == data.username:
-            olddata[idx] = data_to_add
-
-            db.update_json(authpath, olddata)
-            return "UserData successfully updated"
-    return "UserData Failed to Update - Username Not Found"
-
+            key_id = i['key']
+            found = True
+            break
+    users.delete(key_id)
+    users.put(data.dict())
+    response = "UserData successfully updated" if found else "UserData Failed to Update - Username Not Found"
+    return response
 
 @app.get("/get_userData", tags=['userData'])
 # @app.post("/get_userData", tags=['userData'])
@@ -205,7 +226,7 @@ async def add_question(data: Question):
     authpath = "questionData"
     olddata = db.load_json(authpath)
     for i in olddata:
-        if i['questionSubject'] == data.questionSubject:
+        if i['questionSubject'] == data.questionSubject and i['year'] == data.year:
             if i['questionId'] == data.questionId:
                 return "Failed: Question ID already exists"
 
@@ -248,16 +269,16 @@ async def get_question_by_subject_topic(subject: str, topic: int):
         return result
     
 @app.get("/get_question_by_subject_topic_difficulty", tags=['question'])
-async def get_question_by_subject_topic_difficulty(subject: str, topic: int, difficulty: int):
+async def get_question_by_subject_topic_difficulty(subject: str, topic: int, difficulty: int, year: int):
     authpath = "questionData"
     data = db.load_json(authpath)
     result = []
     for i in data:
-        if i['questionSubject'] == subject and i['questionTopic'] == topic and i['questionDifficulty'] == difficulty:
+        if i['questionSubject'] == subject and i['questionTopic'] == topic and i['questionDifficulty'] == difficulty and i['year'] == year:
             result.append(i)
             
     if result == []:
-        return "No question with subject {} and topic {} found".format(subject, topic)
+        return "No question with subject {} and topic {}, difficulty {}, year {} found".format(subject, topic, difficulty, year)
     else:
         return result
 

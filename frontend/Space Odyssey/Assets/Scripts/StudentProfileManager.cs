@@ -68,9 +68,11 @@ public class StudentProfileManager : MonoBehaviour
     }
     public void logOut()
     {
-        var url = HttpManager.http_url + "update_userData_login";
-        StudentLastLoginDetails newLastLoginDetails = new StudentLastLoginDetails(username, DateTime.Now.ToString());
-        var response = HttpManager.Post(url, newLastLoginDetails);
+
+        string back_url = $"update_userData_key?username={username}&key=lastLoginDay&value={DateTime.Now.ToString()}";
+        var url = HttpManager.http_url + back_url;
+
+        var response = HttpManager.Post(url, "");
         Debug.Log("post" + response);
         SceneLoaderManager.LoadMainPageScene();
     }

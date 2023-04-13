@@ -56,7 +56,7 @@ public class BattleSystem : MonoBehaviour
         playerUnit.Setup();
         enemyUnit.Setup();
         playerHud.SetData();
-        enemyHud.SetEnemy();
+        enemyHud.SetEnemy(GameController.Instance.currentDifficultyLevel());
 
         yield return StartCoroutine(dialogBox.TypeDialog("An enemy has challenged you to a duel!"));
 

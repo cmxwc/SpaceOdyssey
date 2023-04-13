@@ -32,11 +32,11 @@ public class GameController : MonoBehaviour
 
         int difficultyLevel = currentDifficultyLevel();
         Debug.Log("difficultyLevel is" + difficultyLevel.ToString());
-        // gameDataManager = new GameDataManager();
-        GameDataManager.questionList = QuestionManager.getQuestionDataBySubjectTopicDifficulty(DataManager.selectedSubject, DataManager.selectedTopic, difficultyLevel);
-        // GameDataManager.questionList = QuestionManager.getQuestionDataBySubjectTopicDifficulty("English", 1, 1);
+        GameDataManager.questionList = QuestionManager.getQuestionDataBySubjectTopicDifficulty(DataManager.selectedSubject, DataManager.selectedTopic, difficultyLevel, DataManager.year);
         allQuestionList = GameDataManager.questionList;
+        SelectQuestionsRandomly();
         Debug.Log("Questions for difficulty level have been retrived");
+
         playerController.OnEncountered += StartBattle;
         battleSystem.OnBattleOver += EndBattle;
 
@@ -97,6 +97,25 @@ public class GameController : MonoBehaviour
     public List<Question> GetQuestions()
     {
         return GameDataManager.questionList;
+    }
+
+    // In each difficulty level game map, there are 6 enemies with 2 questions each.
+    // For each difficulty level, randomly select 12 questions to assign to the 6 enemies.
+    private void SelectQuestionsRandomly()
+    {
+        List<Question> questionList = allQuestionList;
+        int numOfQuestionsToSelect = 12;
+        System.Random rnd = new System.Random();
+        List<Question> randomQuestions = new List<Question>();
+        for (int i = 0; i < numOfQuestionsToSelect; i++)
+        {
+            int randomIndex = rnd.Next(0, questionList.Count);
+            randomQuestions.Add(questionList[randomIndex]);
+            questionList.RemoveAt(randomIndex);
+        }
+        allQuestionList = randomQuestions;
+        Debug.Log(allQuestionList.Count);
+        Debug.Log(allQuestionList);
     }
     public void UpdateAfterEachQuestion(int correct, int score, string weakestLearningObj = "")
     {
@@ -169,7 +188,7 @@ public class GameController : MonoBehaviour
 
     }
 
-    private int currentDifficultyLevel()
+    public int currentDifficultyLevel()
     {
         currentScene = SceneLoaderManager.CurrentScene();
         int difficultyLevel = 1;
