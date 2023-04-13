@@ -42,7 +42,7 @@ public class LoginAndRegister : MonoBehaviour
     public void IsUsernameValid()
     {
         // Ensure username has at least 6 characters and is only upper or lowercase letters
-        if ((usernameInput.Length >= 6) & (Regex.IsMatch(usernameInput, @"^[a-zA-Z]+$")))
+        if ((usernameInput.Length >= 6) & (Regex.IsMatch(usernameInput, @"^[a-zA-Z0-9]+$")))
         {
             usernameValid = true;
             MessageLabel.text = "";
