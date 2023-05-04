@@ -5,7 +5,7 @@ from deta import Deta
 class database():
     def __init__(self, env):
         if env == 'deta':
-            self.deta = Deta('c0nydj0i_8G5hUausise6e3TjRpWkcrJh2GhoBrbJ')
+            self.deta = Deta()
             print("Running Deta Server")
         else:
             self.deta = False
@@ -53,3 +53,8 @@ class database():
             users.delete(key)
         else:
             print("nvm")
+    def put_many_json(self, name, data):
+        if self.deta:
+            users = self.deta.Base(name)
+            users.put_many(data)
+

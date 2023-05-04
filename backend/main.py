@@ -3,16 +3,18 @@ import uvicorn
 from base import database
 from classes import *
 import argparse
+from deta import Deta
+from typing import Optional, List, Any
 
 # adding cors headers
 from fastapi.middleware.cors import CORSMiddleware
 
 parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('--db', type=str, default="Space_DB",
+parser.add_argument('--db', type=str, default="deta",
                     help='select db')
 args = parser.parse_args()
 
-
+deta = Deta()
 db = database(args.db)
 app = FastAPI()
 
@@ -20,6 +22,7 @@ app = FastAPI()
 origins = [
     'http://127.0.0.1:5501',
     'http://127.0.0.1:5500',
+    'http://localhost:54341/',
     'https://spaceodyssey-teacher-admin.netlify.app'
 ]
 # add middleware
@@ -45,7 +48,7 @@ def register_student(data: User):
 
     data = db.load_json(authpath)
     for i in data:
-        if username in i['username']:
+        if username == i['username']:
             return "Username already exists!"
 
     data_to_add = {
@@ -53,7 +56,9 @@ def register_student(data: User):
         "password": password,
     }
     db.save_json(authpath, data_to_add)
-    db.save_json("student_info", {"username": username})
+    # users = deta.Base("auth_student")
+    # users.put(data_to_add)
+    # db.save_json("student_info", {"username": username})
 
     return "Successfully registered!"
 
@@ -66,7 +71,7 @@ def login_student(data: User):
 
     data = db.load_json(authpath)
     for i in data:
-        if username in i['username']:
+        if username == i['username']:
             if password == i['password']:
                 return "Successfully authenticated"
             else:
@@ -83,7 +88,7 @@ def register_teacher(data: User):
 
     data = db.load_json(authpath)
     for i in data:
-        if username in i['username']:
+        if username == i['username']:
             return "Username already exists!"
 
     data_to_add = {
@@ -103,7 +108,7 @@ def login_teacher(data: User):
 
     data = db.load_json(authpath)
     for i in data:
-        if username in i['username']:
+        if username == i['username']:
             if password == i['password']:
                 return "Successfully authenticated"
             else:
@@ -149,32 +154,53 @@ async def add_userData(data: UserData):
     return "UserData successfully registered"
 
 
-@app.post("/update_userData_login", tags=['userData'])
-async def update_userData_login(data: UserDataLogin):
+@app.post("/update_userData_key", tags=['userData'])
+async def update_userData_key(username: str, key: str, value: Any):
+    """
+    Updates a single field in an item in the userData schema
+    """
     authpath = "userData"
-    data_to_add = data.dict()
-    olddata = db.load_json(authpath)
-    for idx, i in enumerate(olddata):
-        if i['username'] == data.username:
-            olddata[idx]["lastLoginDay"] = data_to_add["lastLoginDay"]
-
-            db.update_json(authpath, olddata)
-            return "UserData successfully updated"
-    return "UserData Failed to Update - Username Not Found"
+    users = deta.Base(authpath)
+    old_data = users.fetch().items
+    found = False
+    for i in old_data:
+        if i['username'] == username:
+            key_id = i['key']
+            found = True
+            break
+    if not found:
+        return "UserData Failed to Update - Username Not Found"
+    item = users.get(key_id)
+    field_type = type(item[key])
+    if field_type == type(value):
+        pass  # no need to convert, they already have the same type
+    elif isinstance(item[key], int):
+        value = int(value)
+    elif isinstance(item[key], float):
+        value = float(value)
+    elif isinstance(item[key], str):
+        value = str(value)
+    else:
+        raise TypeError("Cannot convert types")
+    item[key] = value
+    users.put(item)
+    return "UserData successfully updated" 
 
 @app.post("/update_userData", tags=['userData'])
 async def update_userData(data: UserData):
     authpath = "userData"
-    data_to_add = data.dict()
-    olddata = db.load_json(authpath)
-    for idx, i in enumerate(olddata):
+    users = deta.Base(authpath)
+    old_data = users.fetch().items
+    found = False
+    for i in old_data:
         if i['username'] == data.username:
-            olddata[idx] = data_to_add
-
-            db.update_json(authpath, olddata)
-            return "UserData successfully updated"
-    return "UserData Failed to Update - Username Not Found"
-
+            key_id = i['key']
+            found = True
+            break
+    users.delete(key_id)
+    users.put(data.dict())
+    response = "UserData successfully updated" if found else "UserData Failed to Update - Username Not Found"
+    return response
 
 @app.get("/get_userData", tags=['userData'])
 # @app.post("/get_userData", tags=['userData'])
@@ -200,7 +226,7 @@ async def add_question(data: Question):
     authpath = "questionData"
     olddata = db.load_json(authpath)
     for i in olddata:
-        if i['questionSubject'] == data.questionSubject:
+        if i['questionSubject'] == data.questionSubject and i['year'] == data.year:
             if i['questionId'] == data.questionId:
                 return "Failed: Question ID already exists"
 
@@ -229,7 +255,7 @@ async def get_question_by_id(subject: str):
         return result
 
 @app.get("/get_question_by_subject_topic", tags=['question'])
-async def get_question_by_id(subject: str, topic: int):
+async def get_question_by_subject_topic(subject: str, topic: int):
     authpath = "questionData"
     data = db.load_json(authpath)
     result = []
@@ -239,6 +265,20 @@ async def get_question_by_id(subject: str, topic: int):
             
     if result == []:
         return "No question with subject {} and topic {} found".format(subject, topic)
+    else:
+        return result
+    
+@app.get("/get_question_by_subject_topic_difficulty", tags=['question'])
+async def get_question_by_subject_topic_difficulty(subject: str, topic: int, difficulty: int, year: int):
+    authpath = "questionData"
+    data = db.load_json(authpath)
+    result = []
+    for i in data:
+        if i['questionSubject'] == subject and i['questionTopic'] == topic and i['questionDifficulty'] == difficulty and i['year'] == year:
+            result.append(i)
+            
+    if result == []:
+        return "No question with subject {} and topic {}, difficulty {}, year {} found".format(subject, topic, difficulty, year)
     else:
         return result
 
@@ -252,16 +292,16 @@ async def get_question_by_id(subject: str, questionId: int, topic: int):
             return i
     return "No question with subject {}, topic {} and id {} found".format(subject, topic, questionId)
 
-
-@app.post("/update_question_subject_bank", tags=['question'])
-async def update_question_subject_bank(subject: str):
+@app.post("/delete_question_bank", tags=['question'])
+async def delete_question_bank(subject: str, year: int):
     authpath = "questionData"
-    old_data = db.load_json(authpath)
+    users = deta.Base(authpath)
+    old_data = users.fetch().items
     for i in old_data:
-        if i["questionSubject"] == subject:
-            db.delete_json(authpath, i["key"])
-    return "Question bank for subject [{}] updated".format(subject)
+        if i["questionSubject"] == subject and i["year"] == year:
+            users.delete(i["key"])
 
+    return "Question bank for subject [{}], year {} deleted".format(subject, year)
 
 ######## GAME DATA REQUEST #######################################
 def add_id_record(data):
@@ -287,6 +327,17 @@ async def get_gamerecord():
     data = db.load_json(authpath)
     return data
 
+@app.get("/get_gamerecord_user", tags=['game data'])
+async def get_gamerecord(username: str):
+    authpath="gameRecordData"
+    data = db.load_json(authpath)
+    result = []
+    for i in data:
+        if i["username"] == username:
+            result.append(i)
+    result = sorted(result, key=lambda x: x["gameId"], reverse=True)
+    return result
+
 @app.post("/add_question_battle_record", tags=['game data'])
 async def add_question_battle_record(data: QuestionBattleRecord):
     authpath = "questionRecordData"
@@ -301,44 +352,75 @@ async def get_question_battle_record():
     data = db.load_json(authpath)
     return data
 
+# @app.post("/get_avg_subject", tags=['game data'])
+# async def get_stats():
+#     authpath1="questionRecordData"
+#     authpath2="gameRecordData"
+#     qns = deta.Base(authpath1)
+#     games = deta.Base(authpath2)
+#     for i in games:
+#         for j in qns:
+#         i["subject"] = qns.get(i["gameId"])
+#     return data
+
+
+
+# @app.post("/update_question_bank", tags=['question'])
+# async def update_question_bank(data: List[Question]):
+#     authpath = "questionData"
+#     users = deta.Base(authpath)
+#     for i in data:
+#         i.dict()
+#         users.put(i)
+
+#     return "Question bank for subject updated"
+
 
 ######## SCORES REQUEST #######################################
 @app.post("/add_highscore", tags=['scores'])
-async def add_highscore(subject:str, data: HighScores):
+async def add_highscore(data: HighScores):
     authpath = "highscoreData"
     data_to_add = data.dict()
-    olddata = db.load_json(authpath)
-    for idx, i in enumerate(olddata[0][subject]):
-        if i['username'] == data.username:
-            olddata[0][subject][idx]['score'] = data.score
-            db.update_json(authpath, olddata)
-            return "Highscore has been updated for {}".format(subject)
-    olddata[0][subject].append(data_to_add)
-    db.update_json(authpath, olddata)
-    return "New highscore successfully added for {}".format(subject)
+    users = deta.Base(authpath)
+    old_data = users.fetch().items
+    for i in old_data:
+        if i["username"] == data.username and i["subject"] == data.subject:
+            if i["score"] < data.score:
+                users.delete(i["key"])
+            else:
+                return "No new highscore"
+    users.put(data_to_add)
+    return "New highscore successfully added"
+    
 
 
 @app.post("/get_highscore", tags=['scores'])
 async def get_highscore(subject: str):
     authpath="highscoreData"
+    result = []
     data = db.load_json(authpath)
-    return data[0][subject]
+    for i in data:
+        if i["subject"] == subject:
+            result.append(i)
+    return result
 
 ######## ACHIEVEMENTS REQUEST #######################################
 @app.post("/add_achievements", tags=['scores'])
 async def update_userData(username: str, achievement: str):
     authpath = "achievementsData"
+    users = deta.Base(authpath)
+    old_data = users.fetch().items
+
+    for i in old_data:
+        if i["username"] == username:
+            i[achievement] = True
+            users.delete(i["key"])
+            users.put(i)
+
+            return "Updated"
+    
     data_to_add = {"username": username, achievement: True}
-    olddata = db.load_json(authpath)
-    for idx, i in enumerate(olddata):
-        if i['username'] == username:
-            if achievement not in i:
-                olddata[idx][achievement] = True
-                db.update_json(authpath, olddata)
-                return "AchievementsData successfully updated"
-            else:
-                return "Achievement already obtained"
-    db.save_json(authpath, data_to_add)
+    users.put(data_to_add)
     return "AchievementsData successfully updated"
 
 @app.get("/get_achievements", tags=['scores'])
