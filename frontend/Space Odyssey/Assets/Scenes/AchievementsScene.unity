@@ -775,7 +775,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Complete 5 games '
+  m_text: Complete 5 games
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2c0d3322b2eb6e3478c18f7ddcfc66b3, type: 2}
   m_sharedMaterial: {fileID: -5750975373893279193, guid: 2c0d3322b2eb6e3478c18f7ddcfc66b3, type: 2}

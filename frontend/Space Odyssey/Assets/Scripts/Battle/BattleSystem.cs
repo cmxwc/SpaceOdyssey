@@ -13,15 +13,12 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleUnit playerUnit;
     [SerializeField] BattleUnit enemyUnit;
     [SerializeField] BattleDialogBox dialogBox;
-    //[SerializeField] Image enemyImage;
-    //[SerializeField] Image playerImage;
 
     public event Action<bool> OnBattleOver;
     public List<Question> questionList;
     public int currentQuestion;
     public List<String> currentOptionsList;
     public int selectedOption;
-    // public Question currentQuestion;
     int enemyHp;
     bool IsBoss;
 
@@ -43,7 +40,6 @@ public class BattleSystem : MonoBehaviour
     {
         currentQuestion = 0;
         IsBoss = enemy.IsBoss;
-        Debug.Log("ARE YOU A BOSS: " + IsBoss);
         StartCoroutine(SetupBattle(enemy.Questions));
     }
 
@@ -58,7 +54,7 @@ public class BattleSystem : MonoBehaviour
         playerHud.SetData();
         enemyHud.SetEnemy(GameController.Instance.currentDifficultyLevel());
 
-        yield return StartCoroutine(dialogBox.TypeDialog("An enemy has challenged you to a duel!"));
+        yield return dialogBox.TypeDialog("An enemy has challenged you to a duel!");
 
         EnemyQuestion();
         PlayerAction();
@@ -79,7 +75,7 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.PlayerAction;
 
-        StartCoroutine(dialogBox.TypeDialog("Choose an option:"));
+        dialogBox.TypeDialog("Choose an option:");
         dialogBox.EnableActionSelector(true);
     }
 

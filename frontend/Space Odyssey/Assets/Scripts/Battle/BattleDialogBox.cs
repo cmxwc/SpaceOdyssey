@@ -20,7 +20,7 @@ public class BattleDialogBox : MonoBehaviour
     [SerializeField] TextMeshProUGUI questionText;
 
     [SerializeField] TextMeshProUGUI detailsText;
-
+    bool isTyping;
 
 
     public void SetDialog(string dialog)
@@ -30,6 +30,11 @@ public class BattleDialogBox : MonoBehaviour
 
     public IEnumerator TypeDialog(string dialog)
     {
+        isTyping = true;
+        if (isTyping && Input.GetKeyDown(KeyCode.Return))
+        {
+
+        }
         dialogText.text = "";
         foreach (var letter in dialog.ToCharArray())
         {
@@ -37,6 +42,7 @@ public class BattleDialogBox : MonoBehaviour
             yield return new WaitForSeconds(1f / lettersPerSecond);
         }
         yield return new WaitForSeconds(1f);
+        isTyping = false;
     }
 
     public IEnumerator TypeQuestionDialog(string question)

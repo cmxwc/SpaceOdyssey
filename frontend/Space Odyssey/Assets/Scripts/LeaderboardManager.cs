@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using TMPro;
 
 public class LeaderboardManager : MonoBehaviour
 {
@@ -13,11 +14,13 @@ public class LeaderboardManager : MonoBehaviour
     int MaxScores = 5; // Number of scores to be shown on one page
     public RowUI rowUi;
     private int currLeaderboardIndex = 0;
-    private string subject = "English";
+    public TextMeshProUGUI dropdownText;
+    public GameObject LeaderboardObject;
 
     void Start()
     {
-        GetScoreData();
+        // subject = dropdownText.text;
+        GetScoreData(dropdownText.text);
         LoadLeaderboard(0);
     }
 
@@ -35,7 +38,21 @@ public class LeaderboardManager : MonoBehaviour
         public string subject { get; set; }
 
     }
-    public void GetScoreData()
+
+    public void GetSubjectSelected()
+    {
+        string subject = dropdownText.text;
+        GetScoreData(subject);
+
+        // Delete child objects of the previous selected object
+        foreach (Transform child in LeaderboardObject.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        LoadLeaderboard(0);
+    }
+
+    public void GetScoreData(string subject)
     {
         var url = HttpManager.http_url + "get_highscore?subject=" + subject;
         var responseStr = HttpManager.Post(url, "");
@@ -50,9 +67,6 @@ public class LeaderboardManager : MonoBehaviour
         {
             for (int i = 0; i < Mathf.Min(MaxScores, userList.Count); i++)
             {
-                Debug.Log(userList[i].username);
-                Debug.Log(userList[i].score);
-                //if ((userList[i] != null ) && (userList[i].score != 0))
                 if ((userList[i] != null))
                 {
                     var row = Instantiate(rowUi, transform).GetComponent<RowUI>();
@@ -67,9 +81,6 @@ public class LeaderboardManager : MonoBehaviour
         {
             for (int i = 5; i < Mathf.Min(2 * MaxScores, userList.Count); i++)
             {
-                Debug.Log(userList[i].username);
-                Debug.Log(userList[i].score);
-                //if ((userList[i] != null ) && (userList[i].score != 0))
                 if ((userList[i] != null))
                 {
                     var row = Instantiate(rowUi, transform).GetComponent<RowUI>();

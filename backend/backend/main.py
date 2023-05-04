@@ -408,17 +408,19 @@ async def get_highscore(subject: str):
 @app.post("/add_achievements", tags=['scores'])
 async def update_userData(username: str, achievement: str):
     authpath = "achievementsData"
+    users = deta.Base(authpath)
+    old_data = users.fetch().items
+
+    for i in old_data:
+        if i["username"] == username:
+            i[achievement] = True
+            users.delete(i["key"])
+            users.put(i)
+
+            return "Updated"
+    
     data_to_add = {"username": username, achievement: True}
-    olddata = db.load_json(authpath)
-    for idx, i in enumerate(olddata):
-        if i['username'] == username:
-            if achievement not in i:
-                olddata[idx][achievement] = True
-                db.update_json(authpath, olddata)
-                return "AchievementsData successfully updated"
-            else:
-                return "Achievement already obtained"
-    db.save_json(authpath, data_to_add)
+    users.put(data_to_add)
     return "AchievementsData successfully updated"
 
 @app.get("/get_achievements", tags=['scores'])

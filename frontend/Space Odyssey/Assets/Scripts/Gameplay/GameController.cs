@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject LoadingScreen;
     [SerializeField] BattleDialogBox dialogBox;
     GameState state;
+    GameState prevState;
     private string currentScene;
 
     public List<Question> allQuestionList;
@@ -52,6 +53,7 @@ public class GameController : MonoBehaviour
 
         DialogManager.Instance.OnShowDialog += () =>
         {
+            prevState = state;
             state = GameState.Dialog;
         };
         DialogManager.Instance.OnCloseDialog += () =>
@@ -114,6 +116,7 @@ public class GameController : MonoBehaviour
             questionList.RemoveAt(randomIndex);
         }
         allQuestionList = randomQuestions;
+        GameDataManager.questionList = randomQuestions;
         Debug.Log(allQuestionList.Count);
         Debug.Log(allQuestionList);
     }
@@ -138,7 +141,7 @@ public class GameController : MonoBehaviour
             int numberCorrectLevel = GameDataManager.numberCorrectLevel;
             // TODO change this if showing demo
             // numberCorrectLevel = 10;
-            if (numberCorrectLevel >= 8)
+            if (numberCorrectLevel >= 7)
             {
                 // Load next level or scene
                 GameDataManager.numberCorrectLevel = 0;
