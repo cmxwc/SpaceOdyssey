@@ -12,10 +12,6 @@
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
   </ol>
@@ -27,6 +23,8 @@
 ## About The Project
 The key aim of this project is to develop a game that seeks to gamify learning while incorporating learning analytics. This project consists of two applications – Space Odyssey, a game for students, and a teacher web application, for teachers to manage learning content. 
 This project directory contains the files used to build the frontend Space Odyssey game and teacher web application, and the backend development.
+
+![overview]
 
 ### Space Odyssey
 
@@ -66,15 +64,16 @@ If you would like to view the backend server through the FastAPI documentation, 
 ## Usage
 
 The following screenshots show the user flow when playing the Space Odyssey game or using the Teacher Web Application:
-
-
-
-
-
+![space1]
+![space2]
+![teacher]
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
+[overview]: images/Overview.png
 [space1]: images/SpaceOdyssey1.png
+[space2]: images/SpaceOdyssey2.png
+[teacher]: images/TeacherApp.png
 
 [Unity]: https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=unity&logoColor=white
 [Unity-url]: https://unity.com/
