@@ -1,4 +1,4 @@
-# SpaceOdyssey
+# SpaceOdyssey :rocket::stars::star:
 
 <!-- TABLE OF CONTENTS -->
 <details>
