@@ -154,7 +154,7 @@ public class BattleSystem : MonoBehaviour
             if (IsBoss)
             {
                 // POST GAME RESULTS ---- GAME LEVEL COMPLETED
-                GameDataManager.completed = false;
+                GameDataManager.completed = true;
                 GameController.Instance.HandleLevelComplete(false);
             }
             OnBattleOver(true);
